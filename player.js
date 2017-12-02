@@ -111,6 +111,11 @@ Player.prototype.knockBack = function(obj) {
     if (state == 'punch') {
         knockBack = 2 + 3 * this.power;
         obj.push.x = this.dir * knockBack;
+        if (this.power > 0.3) {
+            punchStrongSound.play();
+        } else {
+            punchWeakSound.play();
+        }
     } else if (state == 'upper_cut') {
         knockBack = 3 + 3 * this.power;
         obj.push.y = -1 * knockBack * 1.8;
