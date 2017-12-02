@@ -91,6 +91,16 @@ function Player() {
             ],
             isAirState: true,
             moveable: false,
+        },
+        kick: {
+            frames: [
+                { duration: 6, frame: 35 },
+                { duration: 6, frame: 36 },
+                { duration: 6, frame: 37 },
+                { duration: 6, frame: 38, after: 'air_rise' },
+            ],
+            isAirState: true,
+            moveable: false,
         }
     }
 
@@ -117,14 +127,18 @@ Player.prototype.knockBack = function(obj) {
 
 
     var state = this.behavior.state;
-    var knockBack = 0;
+    var knockBack = 1;
 
     if (state == 'punch') {
         knockBack = 2 + 3 * this.power;
         obj.push.x = this.dir * knockBack;
     } else if (state == 'upper_cut') {
         knockBack = 3 + 3 * this.power;
-        obj.push.y = -1 * knockBack * 1.8;
+        obj.push.y = -knockBack * 1.8;
+    } else if (state == 'kick') {
+        knockBack = 3 + 3 * this.power;
+        obj.push.x = this.dir * knockBack * Math.cos(0.2);
+        obj.push.y = -knockBack * Math.sin(0.2);
     }
 
     impacts[5 - Math.min(Math.floor(this.power / 0.16), 5)].play();
@@ -193,6 +207,13 @@ Player.prototype.standardInput = function() {
                     this.haveBeenHit = {};
                     punch.play();
                 }
+            }
+        } else {
+            if (Key.pressed(Key.P)) {
+                this.behavior.changeState('kick');
+                this.reducePower(0.12);
+                this.haveBeenHit = {};
+                punch.play();
             }
         }
     }
