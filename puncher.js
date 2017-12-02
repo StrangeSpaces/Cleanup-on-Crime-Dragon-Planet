@@ -52,11 +52,14 @@ function Puncher() {
                 { duration: 1000000, frame: 12 }
             ],
             isAirState: true,
+            cancelable: false,
         },
         arresting: {
             frames: [
                 { duration: 1000000, frame: 16 }
             ],
+            isAirState: true,
+            cancelable: false,
         },
         dead: {
             frames: [
@@ -166,7 +169,7 @@ Puncher.prototype.hitGround = function() {
     Entity.prototype.hitGround.call(this);
 
     if (this.states[this.behavior.state].isAirState) {
-        if (this.behavior.state == 'knock_back') {
+        if (this.states[this.behavior.state].cancelable == false) {
             return;
         }
 
