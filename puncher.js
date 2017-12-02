@@ -2,11 +2,9 @@ Puncher.prototype = Object.create(Entity.prototype);
 Puncher.prototype.parent = Entity.prototype;
 
 function Puncher() {
-    Entity.call(this, 'jane', 96, 64);
+    Entity.call(this, 'dragon', 64, 48);
+    this.load_hitboxes('dragon_boxes');
     this.halfWidth = 16;
-
-    this.load_hitboxes('jane_boxes');
-    console.log(this.boxes);
 
     this.type = PUNCHER;
     this.dir = RIGHT;
@@ -15,11 +13,6 @@ function Puncher() {
         idle: {
             frames: [
                 { duration: 6, frame: 0 },
-                { duration: 6, frame: 1 },
-                { duration: 6, frame: 2 },
-                { duration: 6, frame: 3 },
-                { duration: 6, frame: 4 },
-                { duration: 6, frame: 5 },
             ],
             update: function(self) {
                 self.think();
@@ -27,12 +20,10 @@ function Puncher() {
         },
         run: {
             frames: [
+                { duration: 6, frame: 4 },
+                { duration: 6, frame: 5 },
+                { duration: 6, frame: 6 },
                 { duration: 6, frame: 7 },
-                { duration: 6, frame: 8 },
-                { duration: 6, frame: 9 },
-                { duration: 6, frame: 10 },
-                { duration: 6, frame: 11 },
-                { duration: 6, frame: 12 },
             ],
             update: function(self) {
                 self.think();
@@ -48,7 +39,7 @@ function Puncher() {
         },
         air_fall: {
             frames: [
-                { duration: 6, frame: 15 },
+                { duration: 6, frame: 0 },
             ],
             update: function(self) {
             },
@@ -56,16 +47,16 @@ function Puncher() {
         },
         knock_back: {
             frames: [
-                { duration: 1000000, frame: 0 }
+                { duration: 1000000, frame: 12 }
             ],
             isAirState: true,
         },
-        punch: {
+        stab: {
             frames: [
-                { duration: 6, frame: 21 },
-                { duration: 6, frame: 22 },
-                { duration: 6, frame: 23 },
-                { duration: 6, frame: 24, after: 'idle' },
+                { duration: 6, frame: 8 },
+                { duration: 6, frame: 9 },
+                { duration: 6, frame: 10 },
+                { duration: 6, frame: 11, after: 'idle' },
             ],
             moveable: false
         },
@@ -92,7 +83,7 @@ function Puncher() {
     this.friction = 0.05;
     this.speed = 0.2
 
-    this.power = 0.5;
+    this.stab_wait = 0;
 
     this.behavior = new Behavior(this.states, this);
 
@@ -101,15 +92,34 @@ function Puncher() {
 
 Puncher.prototype.think = function() {
     if (player.pos.x > this.pos.x) {
-        this.vel.x += this.speed;
-        this.dir = 1;
-    } else {
-        this.vel.x -= this.speed;
         this.dir = -1;
+    } else {
+        this.dir = 1;
     }
 
-    if (Math.abs(player.pos.x - this.pos.x) < 32) {
+    var dist = Math.abs(player.pos.x - this.pos.x);
+    if (dist < 28) {
         this.vel.x = 0;
+
+        if (this.stab_wait <= 0) {
+            this.behavior.changeState('stab');
+            this.haveBeenHit = {};
+            this.stab_wait = 66*2;
+            return;
+        }
+    } else if (dist > 40) {
+        if (player.pos.x > this.pos.x) {
+            this.vel.x += this.speed;
+        } else {
+            this.vel.x -= this.speed;
+        }
+    } else {
+        if (this.stab_wait <= 0) {
+            this.behavior.changeState('stab');
+            this.haveBeenHit = {};
+            this.stab_wait = 66*2;
+            return;
+        }
     }
 
     if (this.vel.x == 0) {
@@ -120,21 +130,20 @@ Puncher.prototype.think = function() {
 }
 
 Puncher.prototype.knockBack = function(obj) {
-    var state = player.behavior.state;
-
-    console.log(this.power)
-    var mult = 0.4 + this.power * 0.6;
-
-    if (state == 'punch') {
-        obj.push.x = this.dir * 4 * mult;
-    } else if (state == 'upper_cut') {
-        obj.push.y = -7 * mult;
+    if (this.haveBeenHit[obj]) {
+        return;
     }
+    this.haveBeenHit[obj] = true;
+
+    obj.push.x = this.dir * -4;
 
     obj.hitstun = 3;
     this.hitstun = 3;
+    obj.behavior.changeState('knock_back');
+    obj.knockBackCounter = 20;
 
-    SHAKE = 3 * mult;
+    obj.vel.x = 0;
+    obj.vel.y = 0;
 }
 
 Puncher.prototype.hitGround = function() {
@@ -154,6 +163,7 @@ Puncher.prototype.reducePower = function(amount) {
 }
 
 Puncher.prototype.update = function() {
+    this.stab_wait--;
     if (this.knockBackCounter > 0) {
         if (--this.knockBackCounter <= 0) {
             this.behavior.changeState('idle');

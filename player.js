@@ -41,6 +41,12 @@ function Player() {
                 self.standardInput();
             }
         },
+        knock_back: {
+            frames: [
+                { duration: 1000000, frame: 0 }
+            ],
+            isAirState: true,
+        },
         air_rise: {
             frames: [
                 { duration: 6, frame: 14 },
@@ -96,6 +102,7 @@ function Player() {
     this.speed = 0.2
 
     this.power = 0;
+    this.doubleJump = true;
 
     this.behavior = new Behavior(this.states, this);
 
@@ -103,28 +110,32 @@ function Player() {
 };
 
 Player.prototype.knockBack = function(obj) {
-    var state = player.behavior.state;
+    if (this.haveBeenHit[obj]) {
+        return;
+    }
+    this.haveBeenHit[obj] = true;
 
-    console.log(this.power)
+
+    var state = this.behavior.state;
     var knockBack = 0;
 
     if (state == 'punch') {
         knockBack = 2 + 3 * this.power;
         obj.push.x = this.dir * knockBack;
-        if (this.power > 0.3) {
-            punchStrongSound.play();
-        } else {
-            punchWeakSound.play();
-        }
     } else if (state == 'upper_cut') {
         knockBack = 3 + 3 * this.power;
         obj.push.y = -1 * knockBack * 1.8;
     }
 
+    impacts[5 - Math.min(Math.floor(this.power / 0.16), 5)].play();
+
     obj.hitstun = 3;
     this.hitstun = 3;
     obj.behavior.changeState('knock_back');
     obj.knockBackCounter = knockBack * 6;
+
+    obj.vel.x = 0;
+    obj.vel.y = 0;
 
     SHAKE = knockBack / 1.2;
 }
@@ -132,8 +143,10 @@ Player.prototype.knockBack = function(obj) {
 Player.prototype.hitGround = function() {
     Entity.prototype.hitGround.call(this);
 
+    this.doubleJump = true;
+
     if (this.states[this.behavior.state].isAirState) {
-        if (this.behavior.state == 'upper_cut') {
+        if (this.behavior.state == 'upper_cut' || this.behavior.state == 'knock_back') {
             return;
         }
 
@@ -161,9 +174,10 @@ Player.prototype.standardInput = function() {
             this.behavior.changeState('idle');
         }
 
-        if (Key.pressed(Key.JUMP) && this.landed) {
+        if (Key.pressed(Key.JUMP) && (this.landed || this.doubleJump)) {
             this.behavior.changeState('air_rise');
             this.vel.y = -5;
+            this.doubleJump = this.landed;
         }
 
         if (this.landed) {
@@ -172,10 +186,12 @@ Player.prototype.standardInput = function() {
                     this.behavior.changeState('upper_cut');
                     this.reducePower(0.22);
                     this.haveBeenHit = {};
+                    uppercut.play();
                 } else {
                     this.behavior.changeState('punch');
                     this.reducePower(0.12);
                     this.haveBeenHit = {};
+                    punch.play();
                 }
             }
         }
@@ -188,6 +204,12 @@ Player.prototype.reducePower = function(amount) {
 
 Player.prototype.update = function() {
     Key.update();
+
+    if (this.knockBackCounter > 0) {
+        if (--this.knockBackCounter <= 0) {
+            this.behavior.changeState('idle');
+        }
+    }
 
     if (!this.landed && !this.states[this.behavior.state].isAirState) {
         this.behavior.changeState('air_fall');

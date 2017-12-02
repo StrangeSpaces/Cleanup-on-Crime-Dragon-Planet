@@ -33,10 +33,9 @@ CollisionHandler.handles.push([PLAYER, BOX, function(player, crate, boxes) {
 }]);
 
 CollisionHandler.handles.push([PLAYER, PUNCHER, function(player, puncher, boxes) {
-    if (player.haveBeenHit[puncher]) {
-        return;
+    if (boxes[2]) {
+        player.knockBack(puncher);
+    } else {
+        puncher.knockBack(player);
     }
-    player.haveBeenHit[puncher] = true;
-
-    player.knockBack(puncher);
 }]);

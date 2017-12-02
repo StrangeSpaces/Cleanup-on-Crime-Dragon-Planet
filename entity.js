@@ -146,7 +146,7 @@ Entity.prototype.load_hitboxes_frame = function(pixels, w, start_x, start_y, wid
         frames[0].push(new Box(
             this,
             (pair[0][0] + w/2) - width/2,
-            (pair[0][0] + h/2) - height/2,
+            (pair[0][1] + h/2) - height/2,
             w/2,
             h/2
         ));
@@ -161,7 +161,7 @@ Entity.prototype.load_hitboxes_frame = function(pixels, w, start_x, start_y, wid
         frames[1].push(new Box(
             this,
             (pair[0][0] + w/2) - width/2,
-            (pair[0][0] + h/2) - height/2,
+            (pair[0][1] + h/2) - height/2,
             w/2,
             h/2
         ));
@@ -210,7 +210,7 @@ Entity.prototype.collide = function(other) {
         for (var t = other.boxes[other.frameNumber][1].length - 1; t >= 0; t--) {
             var t_box = other.boxes[other.frameNumber][1][t];
             if (i_box.collide(t_box)) {
-                return [i_box, t_box];
+                return [i_box, t_box, false];
             }
         }
     }
@@ -220,7 +220,7 @@ Entity.prototype.collide = function(other) {
         for (var t = other.boxes[other.frameNumber][0].length - 1; t >= 0; t--) {
             var t_box = other.boxes[other.frameNumber][0][t];
             if (i_box.collide(t_box)) {
-                return [i_box, t_box];
+                return [i_box, t_box, true];
             }
         }
     }

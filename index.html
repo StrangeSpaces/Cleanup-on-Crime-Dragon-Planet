@@ -38,66 +38,42 @@
 
 <script type="text/javascript">
     var vol = 0.6;
-    var stomp = new Howl({
-      src: ['sounds/stomp.wav'],
-      volume: vol * 0.2,
-    });
-
-    var punchStrongSound = new Howl({
-      src: ['sounds/punchStrong.wav'],
+    var punch = new Howl({
+      src: ['sounds/punchSwing.wav'],
       volume: vol,
     });
 
-    var punchWeakSound = new Howl({
-      src: ['sounds/punchWeak.wav'],
-      volume: vol,
+    var uppercut = new Howl({
+      src: ['sounds/uppercut.wav'],
+      volume: vol * 0.8,
     });
 
-    var landClang = new Howl({
-        src: ['sounds/landClang.wav'],
-        volume: vol * 0.7,
-    });
-
-    var getHit = new Howl({
-        src: ['sounds/getHit.wav'],
-        volume: vol * 0.7,
-    });
-
-    var hitShield = new Howl({
-        src: ['sounds/hitShield.wav'],
-        volume: vol * 0.5,
-    });
-
-    var hitEnemy = new Howl({
-        src: ['sounds/hitEnemy.wav'],
-        volume: vol * 0.3,
-    });
-
-    var crouchUncrouch = new Howl({
-        src: ['sounds/crouchUncrouch.wav'],
-        volume: vol,
-    });
-
-    var absorbEnergy = new Howl({
-        src: ['sounds/absorbEnergy.wav'],
-        volume: vol * 0.2
-    })
-
-    var whiff =  new Howl({
-        src: ['sounds/whiff.wav'],
-        volume: vol * 0.5,
-    })
-
-    var windUp =  new Howl({
-        src: ['sounds/windUp.wav'],
-        volume: vol,
-    })
-
-    var theme = new Howl({
-        src: ['sounds/eNegTHeme.wav'],
-        volume: vol * 0.25,
-        loop: true,
-    })
+    var impacts = [
+        new Howl({
+          src: ['sounds/impact01.wav'],
+          volume: vol,
+        }),
+        new Howl({
+          src: ['sounds/impact02.wav'],
+          volume: vol,
+        }),
+        new Howl({
+          src: ['sounds/impact03.wav'],
+          volume: vol,
+        }),
+        new Howl({
+          src: ['sounds/impact04.wav'],
+          volume: vol,
+        }),
+        new Howl({
+          src: ['sounds/impact05.wav'],
+          volume: vol,
+        }),
+        new Howl({
+          src: ['sounds/impact06.wav'],
+          volume: vol,
+        }),
+    ]
     // theme.play();
 </script>
 
