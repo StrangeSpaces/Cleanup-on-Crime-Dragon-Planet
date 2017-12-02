@@ -117,7 +117,7 @@ Player.prototype.knockBack = function(obj) {
     obj.hitstun = 3;
     this.hitstun = 3;
 
-    SHAKE = 3;
+    SHAKE = 3 * mult;
 }
 
 Player.prototype.hitGround = function() {

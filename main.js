@@ -90,8 +90,8 @@ function animate() {
 
     if (SHAKE > 0) {
         var ang = Math.random() * Math.PI * 2;
-        currentContainer.position.x += Math.cos(ang) * SHAKE;
-        currentContainer.position.y += Math.sin(ang) * SHAKE;
+        currentContainer.position.x += Math.cos(ang) * SHAKE * scaleFactor;
+        currentContainer.position.y += Math.sin(ang) * SHAKE * scaleFactor;
 
         SHAKE = Math.max(0, SHAKE - 0.2);
     }
