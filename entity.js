@@ -59,6 +59,7 @@ function Entity(file, width, height) {
 
     this.boxes = [];
     this.height = 0;
+    this.hitstun = 0;
 
     this.id = ++runningID;
 

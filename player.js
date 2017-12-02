@@ -113,6 +113,11 @@ Player.prototype.knockBack = function(obj) {
     } else if (state == 'upper_cut') {
         obj.push.y = -7 * mult;
     }
+
+    obj.hitstun = 3;
+    this.hitstun = 3;
+
+    SHAKE = 3;
 }
 
 Player.prototype.hitGround = function() {
@@ -188,7 +193,7 @@ Player.prototype.update = function() {
     }
     this.vel.y += 0.2;
 
-    this.power = Math.min(this.power + 0.0005, 1);
+    this.power = Math.min(this.power + 0.001, 1);
 
     this.behavior.update(1);
     this.frameNumber = this.behavior.frame.frame;

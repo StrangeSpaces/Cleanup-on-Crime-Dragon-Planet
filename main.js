@@ -11,6 +11,7 @@ var resources = null;
 var entities = [];
 
 var scaleFactor;
+var SHAKE = 0;
 var player;
 
 function random(min, max) {
@@ -58,7 +59,13 @@ function collision() {
 
 function animate() {
     for (var i = entities.length - 1; i >= 0; i--) {
-        if (entities[i]) entities[i].update();
+        if (entities[i]) {
+            if (entities[i].hitstun <= 0) {
+                entities[i].update();
+            } else {
+                entities[i].hitstun--;
+            }
+        }
     }
 
     collision();
@@ -78,7 +85,21 @@ function animate() {
         }
     }
 
+    var oldX = currentContainer.position.x;
+    var oldY = currentContainer.position.y;
+
+    if (SHAKE > 0) {
+        var ang = Math.random() * Math.PI * 2;
+        currentContainer.position.x += Math.cos(ang) * SHAKE;
+        currentContainer.position.y += Math.sin(ang) * SHAKE;
+
+        SHAKE = Math.max(0, SHAKE - 0.2);
+    }
+
     renderer.render(stage);
+
+    currentContainer.position.x = oldX;
+    currentContainer.position.y = oldY;
 
     // start the timer for the next animation loop
     requestAnimationFrame(animate);
