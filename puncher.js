@@ -3,6 +3,8 @@ Puncher.prototype.parent = Entity.prototype;
 
 function Puncher() {
     Entity.call(this, 'dragon', 64, 48);
+    this.createHP();
+
     this.load_hitboxes('dragon_boxes');
     this.halfWidth = 16;
 
@@ -50,6 +52,20 @@ function Puncher() {
                 { duration: 1000000, frame: 12 }
             ],
             isAirState: true,
+        },
+        arresting: {
+            frames: [
+                { duration: 1000000, frame: 16 }
+            ],
+        },
+        dead: {
+            frames: [
+                { duration: 1000000, frame: 12 }
+            ],
+            isAirState: true,
+            exit: function(self) {
+                return '__cancel_exit__'
+            }
         },
         stab: {
             frames: [
@@ -162,11 +178,25 @@ Puncher.prototype.reducePower = function(amount) {
     this.power = Math.max(this.power - amount, 0)
 }
 
+Puncher.prototype.damage = function(amount) {
+    this.hp = Math.max(this.hp - amount, 0);
+
+    if (this.hp == 0) {
+        this.behavior.changeState('dead');
+    } else if (this.hp <= 300/16) {
+        this.arresting = true;
+    }
+}
+
 Puncher.prototype.update = function() {
     this.stab_wait--;
-    if (this.knockBackCounter > 0) {
+    if (this.knockBackCounter > 0 && this.behavior.state == 'knock_back') {
         if (--this.knockBackCounter <= 0) {
-            this.behavior.changeState('idle');
+            if (this.arresting) {
+                this.behavior.changeState('arresting');
+            } else {
+                this.behavior.changeState('idle');
+            }
         }
     }
 

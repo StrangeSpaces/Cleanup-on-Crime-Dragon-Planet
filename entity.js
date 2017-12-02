@@ -86,6 +86,12 @@ function Entity(file, width, height) {
     }
 }
 
+Entity.prototype.createHP = function() {
+    this.hp_sprite = new PIXI.Sprite(new PIXI.Texture(resources['tiles'].texture, new PIXI.Rectangle(0, 0, 16, 4)));
+    this.hp = 100;
+    currentContainer.addChild(this.hp_sprite);
+}
+
 Entity.prototype.load_hitboxes = function(file) {
     var image = this.getPixels(file);
 
@@ -231,6 +237,13 @@ Entity.prototype.collide = function(other) {
 Entity.prototype.updateGraphics = function() {
     this.sprite.position.x = this.pos.x + this.offset.x;
     this.sprite.position.y = this.pos.y + this.offset.y;
+
+    if (this.hp_sprite) {
+        this.hp_sprite.position.x = this.sprite.position.x - 8;
+        this.hp_sprite.position.y = this.sprite.position.y - 16;
+
+        this.hp_sprite.texture.frame = new PIXI.Rectangle(0, 0, Math.ceil(this.hp * 16/100), 4);
+    }
 
     this.frame.x = (this.frameNumber % this.framesPerRow) * this.frame.width;
     this.frame.y = Math.floor(this.frameNumber / this.framesPerRow) * this.frame.height;
