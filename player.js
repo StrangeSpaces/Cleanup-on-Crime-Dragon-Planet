@@ -129,6 +129,7 @@ Player.prototype.standardInput = function() {
 
         if (Key.pressed(Key.JUMP) && this.landed) {
             this.behavior.changeState('air_rise');
+            this.vel.y = -5;
         }
 
         if (this.landed) {
