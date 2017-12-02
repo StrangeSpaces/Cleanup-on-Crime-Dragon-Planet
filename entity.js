@@ -26,6 +26,7 @@ Vec.prototype.setLength = function(target) {
 var ENTITY = 0;
 var PLAYER = 1;
 var BOX = 2;
+var PUNCHER = 3;
 
 var runningID = 0;
 
@@ -60,6 +61,7 @@ function Entity(file, width, height) {
     this.boxes = [];
     this.height = 0;
     this.hitstun = 0;
+    this.knockBackCounter = 0;
 
     this.id = ++runningID;
 

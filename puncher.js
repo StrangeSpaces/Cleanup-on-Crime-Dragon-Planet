@@ -1,17 +1,14 @@
-Player.prototype = Object.create(Entity.prototype);
-Player.prototype.parent = Entity.prototype;
+Puncher.prototype = Object.create(Entity.prototype);
+Puncher.prototype.parent = Entity.prototype;
 
-var LEFT = -1;
-var RIGHT = 1;
-
-function Player() {
+function Puncher() {
     Entity.call(this, 'jane', 96, 64);
     this.halfWidth = 16;
 
     this.load_hitboxes('jane_boxes');
     console.log(this.boxes);
 
-    this.type = PLAYER;
+    this.type = PUNCHER;
     this.dir = RIGHT;
 
     this.states = {
@@ -25,7 +22,7 @@ function Player() {
                 { duration: 6, frame: 5 },
             ],
             update: function(self) {
-                self.standardInput();
+                self.think();
             }
         },
         run: {
@@ -38,7 +35,7 @@ function Player() {
                 { duration: 6, frame: 12 },
             ],
             update: function(self) {
-                self.standardInput();
+                self.think();
             }
         },
         air_rise: {
@@ -46,11 +43,6 @@ function Player() {
                 { duration: 6, frame: 14 },
             ],
             update: function(self) {
-                self.standardInput();
-
-                if (self.vel.y > 0) {
-                    self.behavior.changeState('air_fall');
-                }
             },
             isAirState: true
         },
@@ -59,9 +51,14 @@ function Player() {
                 { duration: 6, frame: 15 },
             ],
             update: function(self) {
-                self.standardInput();
             },
             isAirState: true
+        },
+        knock_back: {
+            frames: [
+                { duration: 1000000, frame: 0 }
+            ],
+            isAirState: true,
         },
         punch: {
             frames: [
@@ -88,47 +85,63 @@ function Player() {
         }
     }
 
-    this.pos.x = 10;
+    this.pos.x = 60;
     this.pos.y = 50;
 
     this.max_speed = 2;
     this.friction = 0.05;
     this.speed = 0.2
 
-    this.power = 0;
+    this.power = 0.5;
 
     this.behavior = new Behavior(this.states, this);
 
     this.haveBeenHit = {};
 };
 
-Player.prototype.knockBack = function(obj) {
+Puncher.prototype.think = function() {
+    if (player.pos.x > this.pos.x) {
+        this.vel.x += this.speed;
+        this.dir = 1;
+    } else {
+        this.vel.x -= this.speed;
+        this.dir = -1;
+    }
+
+    if (Math.abs(player.pos.x - this.pos.x) < 32) {
+        this.vel.x = 0;
+    }
+
+    if (this.vel.x == 0) {
+        this.behavior.changeState('idle');
+    } else {
+        this.behavior.changeState('run');
+    }
+}
+
+Puncher.prototype.knockBack = function(obj) {
     var state = player.behavior.state;
 
     console.log(this.power)
-    var knockBack = 0;
+    var mult = 0.4 + this.power * 0.6;
 
     if (state == 'punch') {
-        knockBack = 2 + 3 * this.power;
-        obj.push.x = this.dir * knockBack;
+        obj.push.x = this.dir * 4 * mult;
     } else if (state == 'upper_cut') {
-        knockBack = 3 + 3 * this.power;
-        obj.push.y = -1 * knockBack * 1.8;
+        obj.push.y = -7 * mult;
     }
 
     obj.hitstun = 3;
     this.hitstun = 3;
-    obj.behavior.changeState('knock_back');
-    obj.knockBackCounter = knockBack * 6;
 
-    SHAKE = knockBack / 1.2;
+    SHAKE = 3 * mult;
 }
 
-Player.prototype.hitGround = function() {
+Puncher.prototype.hitGround = function() {
     Entity.prototype.hitGround.call(this);
 
     if (this.states[this.behavior.state].isAirState) {
-        if (this.behavior.state == 'upper_cut') {
+        if (this.behavior.state == 'knock_back') {
             return;
         }
 
@@ -136,53 +149,16 @@ Player.prototype.hitGround = function() {
     }
 }
 
-Player.prototype.standardInput = function() {
-    if (this.states[this.behavior.state].moveable != false) {
-        if (Key.isDown(Key.RIGHT)) {
-            this.vel.x += this.speed;
-
-            if (this.landed) {
-                this.behavior.changeState('run');
-                this.dir = RIGHT;
-            }
-        } else if (Key.isDown(Key.LEFT)) {
-            this.vel.x -= this.speed;
-
-            if (this.landed) {
-                this.behavior.changeState('run');
-                this.dir = LEFT;
-            }
-        } else if (this.landed) {
-            this.behavior.changeState('idle');
-        }
-
-        if (Key.pressed(Key.JUMP) && this.landed) {
-            this.behavior.changeState('air_rise');
-            this.vel.y = -5;
-        }
-
-        if (this.landed) {
-            if (Key.pressed(Key.P)) {
-                if (Key.isDown(Key.UP)) {
-                    this.behavior.changeState('upper_cut');
-                    this.reducePower(0.22);
-                    this.haveBeenHit = {};
-                } else {
-                    this.behavior.changeState('punch');
-                    this.reducePower(0.12);
-                    this.haveBeenHit = {};
-                }
-            }
-        }
-    }
-}
-
-Player.prototype.reducePower = function(amount) {
+Puncher.prototype.reducePower = function(amount) {
     this.power = Math.max(this.power - amount, 0)
 }
 
-Player.prototype.update = function() {
-    Key.update();
+Puncher.prototype.update = function() {
+    if (this.knockBackCounter > 0) {
+        if (--this.knockBackCounter <= 0) {
+            this.behavior.changeState('idle');
+        }
+    }
 
     if (!this.landed && !this.states[this.behavior.state].isAirState) {
         this.behavior.changeState('air_fall');
@@ -197,15 +173,11 @@ Player.prototype.update = function() {
     }
     this.vel.y += 0.2;
 
-    this.power = Math.min(this.power + 0.002, 1);
-
     this.behavior.update(1);
     this.frameNumber = this.behavior.frame.frame;
     this.sprite.scale.x = this.dir;
 
     this.landed = false;
     Entity.prototype.update.call(this);
-
-    power.texture.frame = new PIXI.Rectangle(0, 32, 7 + this.power * 40, 32);
 };
 

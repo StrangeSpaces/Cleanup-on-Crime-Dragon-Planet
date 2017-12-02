@@ -31,3 +31,12 @@ CollisionHandler.handles.push([PLAYER, BOX, function(player, crate, boxes) {
 
     player.knockBack(crate);
 }]);
+
+CollisionHandler.handles.push([PLAYER, PUNCHER, function(player, puncher, boxes) {
+    if (player.haveBeenHit[puncher]) {
+        return;
+    }
+    player.haveBeenHit[puncher] = true;
+
+    player.knockBack(puncher);
+}]);

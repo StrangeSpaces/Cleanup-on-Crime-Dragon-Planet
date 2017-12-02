@@ -172,7 +172,7 @@ function start() {
 
     player = new Player();
     entities.push(player);
-    entities.push(new Crate());
+    entities.push(new Puncher());
 };
 
 function init() {
