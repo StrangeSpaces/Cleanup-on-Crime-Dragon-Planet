@@ -8,6 +8,9 @@ function Player() {
     Entity.call(this, 'jane', 96, 64);
     this.halfWidth = 16;
 
+    this.load_hitboxes('jane_boxes');
+    console.log(this.boxes);
+
     this.type = PLAYER;
     this.dir = RIGHT;
 

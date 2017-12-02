@@ -25,11 +25,7 @@ Vec.prototype.setLength = function(target) {
 
 var ENTITY = 0;
 var PLAYER = 1;
-var ENEMY = 2;
-var ENERGY = 3;
-var SAW = 4;
-var ALPHA = 5;
-var LIGHT = 6;
+var BOX = 2;
 
 var runningID = 0;
 
@@ -58,6 +54,7 @@ Box.prototype.collide = function(other) {
 function Entity(file, width, height) {
     this.pos = new Vec(-1000, 15);
     this.vel = new Vec(0, 0);
+    this.push = new Vec(0, 0);
     this.offset = new Vec(0, 0);
 
     this.boxes = [];
@@ -207,8 +204,8 @@ Entity.prototype.right = function() {
 Entity.prototype.collide = function(other) {
     for (var i = this.boxes[this.frameNumber][0].length - 1; i >= 0; i--) {
         var i_box = this.boxes[this.frameNumber][0][i];
-        for (var t = other.boxes[this.frameNumber][1].length - 1; t >= 0; t--) {
-            var t_box = other.boxes[this.frameNumber][1][t];
+        for (var t = other.boxes[other.frameNumber][1].length - 1; t >= 0; t--) {
+            var t_box = other.boxes[other.frameNumber][1][t];
             if (i_box.collide(t_box)) {
                 return [i_box, t_box];
             }
@@ -217,8 +214,8 @@ Entity.prototype.collide = function(other) {
 
     for (var i = this.boxes[this.frameNumber][1].length - 1; i >= 0; i--) {
         var i_box = this.boxes[this.frameNumber][1][i];
-        for (var t = other.boxes[this.frameNumber][0].length - 1; t >= 0; t--) {
-            var t_box = other.boxes[this.frameNumber][0][t];
+        for (var t = other.boxes[other.frameNumber][0].length - 1; t >= 0; t--) {
+            var t_box = other.boxes[other.frameNumber][0][t];
             if (i_box.collide(t_box)) {
                 return [i_box, t_box];
             }
@@ -239,10 +236,12 @@ Entity.prototype.updateGraphics = function() {
 }
 
 Entity.prototype.update = function() {
-    this.pos.x += this.vel.x;
+    this.pos.x += this.vel.x + this.push.x;
     Tilemap.check(this, 0);
-    this.pos.y += this.vel.y;
+    this.pos.y += this.vel.y + this.push.y;
     Tilemap.check(this, 1);
+
+    this.push.setLength(Math.max(this.push.length() - 0.1, 0));
 
     this.updateGraphics();
 };
@@ -250,6 +249,7 @@ Entity.prototype.update = function() {
 Entity.prototype.hitGround = function() {
     this.vel.y = 0;
     this.landed = true;
+    this.push.y = 0;
 }
 
 Entity.prototype.hitWall = function() {

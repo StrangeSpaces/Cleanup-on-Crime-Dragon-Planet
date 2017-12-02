@@ -151,6 +151,7 @@ function start() {
 
     player = new Player();
     entities.push(player);
+    entities.push(new Crate());
 };
 
 function init() {
@@ -175,11 +176,8 @@ function init() {
   window.addEventListener('resize', resizeHandler, false);
   resizeHandler();
   
-  PIXI.loader.add('test', 'imgs/test.png')
-             .add('saw', 'imgs/saw.png')
-             .add('tiles', 'imgs/tiles.png')
-             .add('energy', 'imgs/energy.png')
-             .add('rust', 'imgs/rust.png')
+  PIXI.loader.add('tiles', 'imgs/tiles.png')
+             .add('jane_boxes', 'imgs/jane_hitbox.png')
              .add('ui', 'imgs/ui.png')
              .add('eneg', 'imgs/eneg.png')
              .add('particles', 'imgs/particles.png')
