@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui" />
+    <title>LD40</title>
+
+    <style type="text/css">
+        body {
+            overflow:hidden;
+
+            width: 100%;
+            height: 100%;
+
+            padding: 0;
+            margin: 0;
+
+            background-color: #35211a;
+        }
+
+        canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<script src="levels/Intro.js"></script>
+
+<script src="libs/pixi.js/pixi.min.js"></script>
+<script src="libs/howler/howler.min.js"></script>
+<script src="libs/base64/base64.js"></script>
+<script src="tracking.js"></script>
+
+<script type="text/javascript">
+    var vol = 0.6;
+    var stomp = new Howl({
+      src: ['sounds/stomp.wav'],
+      volume: vol * 0.2,
+    });
+
+    var glassBreak = new Howl({
+      src: ['sounds/glassBreak.wav'],
+      volume: vol,
+    });
+
+    var landClang = new Howl({
+        src: ['sounds/landClang.wav'],
+        volume: vol * 0.7,
+    });
+
+    var getHit = new Howl({
+        src: ['sounds/getHit.wav'],
+        volume: vol * 0.7,
+    });
+
+    var hitShield = new Howl({
+        src: ['sounds/hitShield.wav'],
+        volume: vol * 0.5,
+    });
+
+    var hitEnemy = new Howl({
+        src: ['sounds/hitEnemy.wav'],
+        volume: vol * 0.3,
+    });
+
+    var crouchUncrouch = new Howl({
+        src: ['sounds/crouchUncrouch.wav'],
+        volume: vol,
+    });
+
+    var absorbEnergy = new Howl({
+        src: ['sounds/absorbEnergy.wav'],
+        volume: vol * 0.2
+    })
+
+    var whiff =  new Howl({
+        src: ['sounds/whiff.wav'],
+        volume: vol * 0.5,
+    })
+
+    var windUp =  new Howl({
+        src: ['sounds/windUp.wav'],
+        volume: vol,
+    })
+
+    var theme = new Howl({
+        src: ['sounds/eNegTHeme.wav'],
+        volume: vol * 0.25,
+        loop: true,
+    })
+    // theme.play();
+</script>
+
+<script src="behavior.js"></script>
+<script src="input.js"></script>
+<script src="entity.js"></script>
+<script src="player.js"></script>
+<script src="enemy.js"></script>
+<script src="blocker.js"></script>
+<script src="tilemap.js"></script>
+<script src="quadtree.js"></script>
+<script src="collision.js"></script>
+<script src="main.js"></script>
+
+</script>
+</body>
+</html>
