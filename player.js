@@ -95,7 +95,7 @@ function Player() {
     this.friction = 0.05;
     this.speed = 0.2
 
-    this.power = 1;
+    this.power = 0.5;
 
     this.behavior = new Behavior(this.states, this);
 
@@ -188,7 +188,7 @@ Player.prototype.update = function() {
     }
     this.vel.y += 0.2;
 
-    this.power = Math.min(this.power + 0.001, 1);
+    this.power = Math.min(this.power + 0.0005, 1);
 
     this.behavior.update(1);
     this.frameNumber = this.behavior.frame.frame;
