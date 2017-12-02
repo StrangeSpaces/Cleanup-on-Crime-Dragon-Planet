@@ -109,11 +109,11 @@ function loadLevel() {
     //     }
     //     entities.push(player);
 
-    //     border = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 0, 48, 32)));
-    //     uiContainer.addChild(border);
+        border = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 0, 48, 32)));
+        uiContainer.addChild(border);
 
-    //     power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
-    //     uiContainer.addChild(power);
+        power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
+        uiContainer.addChild(power);
 
     //     heart = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 64, 48, 32)));
     //     uiContainer.addChild(heart);

@@ -95,8 +95,25 @@ function Player() {
     this.friction = 0.05;
     this.speed = 0.2
 
+    this.power = 1;
+
     this.behavior = new Behavior(this.states, this);
+
+    this.haveBeenHit = {};
 };
+
+Player.prototype.knockBack = function(obj) {
+    var state = player.behavior.state;
+
+    console.log(this.power)
+    var mult = 0.4 + this.power * 0.6;
+
+    if (state == 'punch') {
+        obj.push.x = this.dir * 4 * mult;
+    } else if (state == 'upper_cut') {
+        obj.push.y = -7 * mult;
+    }
+}
 
 Player.prototype.hitGround = function() {
     Entity.prototype.hitGround.call(this);
@@ -139,12 +156,20 @@ Player.prototype.standardInput = function() {
             if (Key.pressed(Key.P)) {
                 if (Key.isDown(Key.UP)) {
                     this.behavior.changeState('upper_cut');
+                    this.reducePower(0.15);
+                    this.haveBeenHit = {};
                 } else {
                     this.behavior.changeState('punch');
+                    this.reducePower(0.075);
+                    this.haveBeenHit = {};
                 }
             }
         }
     }
+}
+
+Player.prototype.reducePower = function(amount) {
+    this.power = Math.max(this.power - amount, 0)
 }
 
 Player.prototype.update = function() {
@@ -163,11 +188,15 @@ Player.prototype.update = function() {
     }
     this.vel.y += 0.2;
 
+    this.power = Math.min(this.power + 0.001, 1);
+
     this.behavior.update(1);
     this.frameNumber = this.behavior.frame.frame;
     this.sprite.scale.x = this.dir;
 
     this.landed = false;
     Entity.prototype.update.call(this);
+
+    power.texture.frame = new PIXI.Rectangle(0, 32, 7 + this.power * 40, 32);
 };
 

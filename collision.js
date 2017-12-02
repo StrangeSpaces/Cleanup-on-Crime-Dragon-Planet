@@ -24,10 +24,10 @@ var CollisionHandler = {
 }
 
 CollisionHandler.handles.push([PLAYER, BOX, function(player, crate, boxes) {
-    var state = player.behavior.state;
-    if (state == 'punch') {
-        crate.push.x = player.dir * 3;
-    } else if (state == 'upper_cut') {
-        crate.push.y = -5;
+    if (player.haveBeenHit[crate]) {
+        return;
     }
+    player.haveBeenHit[crate] = true;
+
+    player.knockBack(crate);
 }]);
