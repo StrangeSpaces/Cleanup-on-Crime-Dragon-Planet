@@ -95,7 +95,7 @@ function Puncher() {
         }
     }
 
-    this.pos.x = 60;
+    this.pos.x = 60 + 100 * Math.random();
     this.pos.y = 50;
 
     this.max_speed = 2;
@@ -107,6 +107,7 @@ function Puncher() {
     this.behavior = new Behavior(this.states, this);
 
     this.haveBeenHit = {};
+    this.destroy_timer = 0;
 };
 
 Puncher.prototype.think = function() {
@@ -186,6 +187,7 @@ Puncher.prototype.damage = function(amount) {
 
     if (this.hp == 0) {
         this.behavior.changeState('dead');
+        this.destroy_timer = 30;
         this.icon_sprite.texture.frame = new PIXI.Rectangle(64, 0, 32, 32);
     } else if (this.hp <= 300/16) {
         this.arresting = true;
@@ -194,12 +196,20 @@ Puncher.prototype.damage = function(amount) {
 }
 
 Puncher.prototype.update = function() {
+    if (this.destroy_timer > 0) {
+        if (--this.destroy_timer <= 0) {
+            this.dead = true;
+            return;
+        }
+    }
+
     this.stab_wait--;
     if (this.knockBackCounter > 0 && this.behavior.state == 'knock_back') {
         if (--this.knockBackCounter <= 0) {
             if (this.arresting) {
                 this.behavior.changeState('arresting');
                 this.icon_sprite.texture.frame = new PIXI.Rectangle(0, 0, 32, 32);
+                this.destroy_timer = 120;
             } else {
                 this.behavior.changeState('idle');
             }

@@ -57,7 +57,7 @@ function Player() {
                 } else if (!Key.isDown(Key.JUMP)) {
                     self.vel.y *= 0.9;
                 }
-                
+
                 self.standardInput();
             },
             isAirState: true
@@ -122,10 +122,10 @@ function Player() {
 };
 
 Player.prototype.knockBack = function(obj) {
-    if (this.haveBeenHit[obj]) {
+    if (this.haveBeenHit[obj.id]) {
         return;
     }
-    this.haveBeenHit[obj] = true;
+    this.haveBeenHit[obj.id] = true;
 
 
     var state = this.behavior.state;

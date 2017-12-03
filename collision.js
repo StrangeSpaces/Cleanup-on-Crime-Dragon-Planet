@@ -1,21 +1,48 @@
 var CollisionHandler = {
-    handles: [],
+    handles: {},
 
     handle: function(a, b) {
         if (!a || !b) return
-        for (var i = 0; i < this.handles.length; i++) {
-            var h = this.handles[i];
+        var col = this.handles[a.type];
+        if (col) {
+            col = col[b.type];
+            if (col) {
+                col(a, b);
+            }
+        }
+    },
 
-            if (h[0] == a.type && h[1] == b.type) {
+    addCollision(collision) {
+        this.handles[collision[1]] = this.handles[collision[1]] || {}
+        this.handles[collision[2]] = this.handles[collision[2]] || {}
+
+        if (collision[0]) {
+            this.handles[collision[1]][collision[2]] = function(a, b) {
                 var boxes = a.collide(b)
                 if (boxes) {
-                    h[2](a, b, boxes);
+                    collision[3](a, b, boxes);
                 }
                 return;
-            } else if (h[1] == a.type && h[0] == b.type) {
-                var boxes = b.collide(a)
+            }
+
+            this.handles[collision[2]][collision[1]] = function(b, a) {
+                var boxes = a.collide(b)
                 if (boxes) {
-                    h[2](b, a, boxes);
+                    collision[3](a, b, boxes);
+                }
+                return;
+            }
+        } else {
+            this.handles[collision[1]][collision[2]] = function(a, b) {
+                if (a.bodyCollide(b)) {
+                    collision[3](a, b);
+                }
+                return;
+            }
+
+            this.handles[collision[2]][collision[1]] = function(b, a) {
+                if (a.bodyCollide(b)) {
+                    collision[3](a, b);
                 }
                 return;
             }
@@ -23,7 +50,7 @@ var CollisionHandler = {
     }
 }
 
-CollisionHandler.handles.push([PLAYER, BOX, function(player, crate, boxes) {
+CollisionHandler.addCollision([true, PLAYER, BOX, function(player, crate, boxes) {
     if (player.haveBeenHit[crate]) {
         return;
     }
@@ -32,10 +59,19 @@ CollisionHandler.handles.push([PLAYER, BOX, function(player, crate, boxes) {
     player.knockBack(crate);
 }]);
 
-CollisionHandler.handles.push([PLAYER, PUNCHER, function(player, puncher, boxes) {
+CollisionHandler.addCollision([true, PLAYER, PUNCHER, function(player, puncher, boxes) {
     if (boxes[2]) {
         player.knockBack(puncher);
     } else {
         puncher.knockBack(player);
     }
 }]);
+
+// CollisionHandler.addCollision([false, PUNCHER, PUNCHER, function(a, b) {
+//     console.log('boo');
+//     if (a.pos.x < b.pos.x) {
+//         a.pos.x = b.left() - a.halfWidth;
+//     } else {
+//         b.pos.x = a.left() - b.halfWidth;
+//     }
+// }]);

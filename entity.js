@@ -237,6 +237,13 @@ Entity.prototype.collide = function(other) {
     return null;
 }
 
+Entity.prototype.bodyCollide = function(other) {
+    return (this.left() < other.right() &&
+        this.top() < other.bot() &&
+        this.right() > other.left() &&
+        this.bot() > other.top())
+}
+
 Entity.prototype.updateGraphics = function() {
     this.sprite.position.x = this.pos.x + this.offset.x;
     this.sprite.position.y = this.pos.y + this.offset.y;

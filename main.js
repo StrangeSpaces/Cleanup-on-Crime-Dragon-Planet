@@ -57,7 +57,12 @@ function collision() {
     }
 }
 
+var tick_count = 0;
 function animate() {
+    if (tick_count++ % 160 == 0) {
+      entities.push(new Puncher());
+    }
+
     for (var i = entities.length - 1; i >= 0; i--) {
         if (entities[i]) {
             if (entities[i].hitstun <= 0) {
@@ -73,6 +78,10 @@ function animate() {
     entities = entities.filter(function( obj ) {
         if (obj.dead) {
             obj.sprite.destroy();
+            if (obj.hp_sprite) {
+              obj.hp_sprite.destroy();
+              obj.icon_sprite.destroy();
+            }
         }
         return !obj.dead;
     });
@@ -172,7 +181,6 @@ function start() {
 
     player = new Player();
     entities.push(player);
-    entities.push(new Puncher());
 };
 
 function init() {
