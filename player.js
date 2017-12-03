@@ -167,8 +167,8 @@ Player.prototype.knockBack = function(obj) {
 
     impacts[5 - Math.min(Math.floor(this.power / 0.16), 5)].play();
 
-    obj.hitstun = 3;
-    this.hitstun = 3;
+    obj.hitstun = Math.floor(1 + knockBack);
+    this.hitstun = Math.floor(1 + knockBack);
     obj.behavior.changeState('knock_back');
     obj.knockBackCounter = knockBack * 6;
     obj.damage(knockBack * 11)
@@ -176,7 +176,7 @@ Player.prototype.knockBack = function(obj) {
     obj.vel.x = 0;
     obj.vel.y = 0;
 
-    SHAKE = knockBack / 1.2 + 0.5;
+    SHAKE = knockBack / 0.7 - 1;
 }
 
 Player.prototype.damage = function(amount) {
