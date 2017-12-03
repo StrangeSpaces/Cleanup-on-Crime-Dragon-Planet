@@ -231,6 +231,7 @@ function init() {
              .add('logo', 'imgs/logo.png')
              .add('cb', 'imgs/crab_hitbox.png')
              .add('jane', 'imgs/jane_sheet.png')
+             .add('projectile', 'imgs/projectiles.png')
              .add('kenpixel', 'imgs/ken.fnt')
              .add('ealpha', 'imgs/ealpha.png').load(function (loader, res) {
       resources = res;

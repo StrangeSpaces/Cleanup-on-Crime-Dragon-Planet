@@ -67,6 +67,19 @@ CollisionHandler.addCollision([true, PLAYER, PUNCHER, function(player, puncher, 
     }
 }]);
 
+CollisionHandler.addCollision([true, PLAYER, PROJECTILE, function(player, projectile, boxes) {
+    player.push.x = projectile.dir * 2;
+
+    player.hitstun = 1;
+    player.behavior.changeState('knock_back');
+    player.knockBackCounter = 10;
+
+    player.vel.x = 0;
+    player.vel.y = 0;
+
+    projectile.dead = true
+}]);
+
 // CollisionHandler.addCollision([false, PUNCHER, PUNCHER, function(a, b) {
 //     console.log('boo');
 //     if (a.pos.x < b.pos.x) {

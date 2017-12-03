@@ -20,6 +20,11 @@ function Police() {
                 self.think();
             }
         },
+        wait: {
+            frames: [
+                { duration: 20, frame: 0, after: 'idle' }
+            ]
+        },
         run: {
             frames: [
                 { duration: 6, frame: 4 },
@@ -78,6 +83,26 @@ function Police() {
             ],
             moveable: false
         },
+        shoot: {
+            frames: [
+                { duration: 6, frame: 16 },
+                { duration: 6, frame: 17, action: function(self) {
+                    var proj = new Projectile();
+                    proj.pos.x = self.pos.x;
+                    proj.pos.y = self.pos.y + 8;
+
+                    proj.vel.x = self.dir * -1.5;
+                    proj.vel.y = -3.5;
+
+                    proj.dir = -self.dir;
+
+                    entities.push(proj);
+                } },
+                { duration: 6, frame: 18 },
+                { duration: 6, frame: 19, after: 'wait' },
+            ],
+            moveable: false
+        },
         upper_cut: {
             frames: [
                 { duration: 6, frame: 28 },
@@ -102,6 +127,7 @@ function Police() {
     this.speed = 0.2
 
     this.stab_wait = 0;
+    this.shoot_wait = 0;
 
     this.behavior = new Behavior(this.states, this);
 
@@ -123,7 +149,7 @@ Police.prototype.think = function() {
         if (this.stab_wait <= 0) {
             this.behavior.changeState('stab');
             this.haveBeenHit = {};
-            this.stab_wait = 66*2;
+            this.stab_wait = 120;
             return;
         }
     } else if (dist > 40) {
@@ -132,11 +158,17 @@ Police.prototype.think = function() {
         } else {
             this.vel.x -= this.speed;
         }
+
+        if (dist > 60 && this.shoot_wait <= 0 && Math.random() * 100 <= 1) {
+            this.behavior.changeState('shoot');
+            this.shoot_wait = 140;
+            return;
+        }
     } else {
         if (this.stab_wait <= 0) {
             this.behavior.changeState('stab');
             this.haveBeenHit = {};
-            this.stab_wait = 66*2;
+            this.stab_wait = 120;
             return;
         }
     }
@@ -200,6 +232,7 @@ Police.prototype.update = function() {
     }
 
     this.stab_wait--;
+    this.shoot_wait--;
     if (this.knockBackCounter > 0 && this.behavior.state == 'knock_back') {
         if (--this.knockBackCounter <= 0) {
             if (this.arresting) {

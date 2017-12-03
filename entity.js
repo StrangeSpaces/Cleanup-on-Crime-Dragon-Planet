@@ -27,6 +27,7 @@ var ENTITY = 0;
 var PLAYER = 1;
 var BOX = 2;
 var PUNCHER = 3;
+var PROJECTILE = 4;
 
 var runningID = 0;
 
