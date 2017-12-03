@@ -2,19 +2,7 @@ var level;
 var levelNum = 0;
 
 var levelOrder = [
-    'Intro',
-    'CuteDogs',
-    'NiceToSawYou',
-    'FirstContact',
-    'Threading',
-    'TwoRoads',
-    'RustLadder',
-    'Drops',
-    'SawThatComing',
-    'Cross',
-    'Pinch',
-    'Climb',
-    'Final',
+    'CrimeDragonLand'
 ]
 
 var tiles;
@@ -55,41 +43,39 @@ var Tilemap = {
         }
         for (var y = 0; y < tileMapHeight; y++) {
             for (var x = 0; x < tileMapWidth; x++) {
-                var tile = fg[y * tileMapWidth + x] - 1;
-                if (tile == 12) {
-                    var entity = new Light();
-                    entity.pos.x = (x + 0.5) * this.tileSize;
-                    entity.pos.y = (y + 0.5) * this.tileSize;
-                    entities.push(entity);
-                } else {
-                    this.place(tile, x, y, frontContainer);
-                }
+                this.place(placement[y * tileMapWidth + x] - 1, x, y, currentContainer);
             }
         }
         for (var y = 0; y < tileMapHeight; y++) {
             for (var x = 0; x < tileMapWidth; x++) {
-                var ent = placement[y * tileMapWidth + x] - 1;
-                var entity = null;
-                if (ent == 16) {
-                    entity = new Enemy();
-                } else if (ent == 17) {
-                    entity = new Blocker();
-                } else if (ent == 18) {
-                    entity = new Chucker();
-                } else if (ent == 25) {
-                    SX = x * 16 + 8;
-                    SY = y * 16;
-                } else if (ent == 27) {
-                    // entity = new Boss();
-                }
-
-                if (entity) {
-                    entity.pos.x = (x + 0.5) * this.tileSize;
-                    entity.pos.y = y * this.tileSize;
-                    entities.push(entity);
-                }
+                var tile = fg[y * tileMapWidth + x] - 1;
+                this.place(tile, x, y, frontContainer);
             }
         }
+        // for (var y = 0; y < tileMapHeight; y++) {
+        //     for (var x = 0; x < tileMapWidth; x++) {
+        //         var ent = placement[y * tileMapWidth + x] - 1;
+        //         var entity = null;
+        //         if (ent == 16) {
+        //             entity = new Enemy();
+        //         } else if (ent == 17) {
+        //             entity = new Blocker();
+        //         } else if (ent == 18) {
+        //             entity = new Chucker();
+        //         } else if (ent == 25) {
+        //             SX = x * 16 + 8;
+        //             SY = y * 16;
+        //         } else if (ent == 27) {
+        //             // entity = new Boss();
+        //         }
+
+        //         if (entity) {
+        //             entity.pos.x = (x + 0.5) * this.tileSize;
+        //             entity.pos.y = y * this.tileSize;
+        //             entities.push(entity);
+        //         }
+        //     }
+        // }
     },
 
     place(f, x, y, con) {
@@ -173,6 +159,6 @@ var Tilemap = {
     },
 
     getTile: function(x, y) {
-        return tiles[y * tileMapWidth + x];
+        return placement[y * tileMapWidth + x];
     }
 }

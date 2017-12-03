@@ -95,7 +95,7 @@ function Puncher() {
         }
     }
 
-    this.pos.x = 60 + 100 * Math.random();
+    this.pos.x = 250 + 200 * Math.random();
     this.pos.y = 50;
 
     this.max_speed = 2;

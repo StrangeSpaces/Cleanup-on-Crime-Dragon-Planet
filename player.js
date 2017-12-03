@@ -107,7 +107,7 @@ function Player() {
     }
 
     this.pos.x = 10;
-    this.pos.y = 50;
+    this.lastY = this.pos.y = 50;
 
     this.max_speed = 2;
     this.friction = 0.05;
@@ -150,7 +150,7 @@ Player.prototype.knockBack = function(obj) {
     this.hitstun = 3;
     obj.behavior.changeState('knock_back');
     obj.knockBackCounter = knockBack * 6;
-    obj.damage(knockBack * 12)
+    obj.damage(knockBack * 11)
 
     obj.vel.x = 0;
     obj.vel.y = 0;
@@ -258,6 +258,36 @@ Player.prototype.update = function() {
     this.landed = false;
     Entity.prototype.update.call(this);
 
+    this.updateCamera();
+
     power.texture.frame = new PIXI.Rectangle(0, 32, 7 + this.power * 40, 32);
 };
+
+Player.prototype.updateCamera = function() {
+    if (!this.states[this.behavior.state].isAirState) {
+        this.lastY = this.pos.y;
+    } else if (this.pos.y - this.lastY > 20) {
+        this.lastY += (this.pos.y - this.lastY) - 20;
+    }
+
+    var dif = new Vec((-this.pos.x + logicalWidth/2) * scaleFactor - currentContainer.position.x,
+                      (-this.lastY + 32 + logicalHeight/2) * scaleFactor - currentContainer.position.y);
+    dif.setLength(dif.length() / 16);
+
+    currentContainer.position.x += dif.x;
+    currentContainer.position.y += dif.y;
+
+    if (currentContainer.position.x > 0) {
+        currentContainer.position.x = 0; 
+    } 
+    if (currentContainer.position.x < (tileMapWidth * 16 - logicalWidth) * -scaleFactor){
+        currentContainer.position.x = (tileMapWidth * 16 - logicalWidth) * -scaleFactor;
+    }
+    if (currentContainer.position.y > 0) {
+        currentContainer.position.y = 0; 
+    } 
+    if (currentContainer.position.y < (tileMapHeight * 16 - logicalHeight) * -scaleFactor){
+        currentContainer.position.y = (tileMapHeight * 16 - logicalHeight) * -scaleFactor;
+    }
+}
 
