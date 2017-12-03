@@ -115,7 +115,7 @@ function Player() {
             enter: function(self) {
                 self.friction = 0;
                 self.vel.x = self.dir * self.max_speed;
-                self.push.x = self.dir * 1;
+                self.push.x = self.dir * 2.5;
             },
             exit: function(self) {
                 self.friction = 0.05;
