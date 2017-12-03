@@ -367,7 +367,7 @@ Puncher.prototype.update = function() {
             if (this.hp <= 0) {
                 scoreAmount -= 300;
                 entities.push(new Label('-300', this.pos));
-                entities.push(new Police());
+                entities.push(new Car());
             } else {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));

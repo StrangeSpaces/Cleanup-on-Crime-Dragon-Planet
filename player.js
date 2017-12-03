@@ -132,6 +132,7 @@ function Player() {
     this.speed = 0.2
 
     this.power = 0;
+    this.lastDisplayedPower = 0;
     this.doubleJump = true;
 
     this.behavior = new Behavior(this.states, this);
@@ -300,7 +301,12 @@ Player.prototype.update = function() {
 
     this.updateCamera();
 
-    power.texture.frame = new PIXI.Rectangle(0, 32, 7 + this.power * 40, 32);
+    if (this.lastDisplayedPower < this.power) {
+        this.lastDisplayedPower = Math.min(this.lastDisplayedPower + 0.008, this.power);
+    } else {
+        this.lastDisplayedPower = Math.max(this.lastDisplayedPower - 0.008, this.power);
+    }
+    power.texture.frame = new PIXI.Rectangle(0, 32, 7 + this.lastDisplayedPower * 40, 32);
 };
 
 Player.prototype.updateCamera = function() {

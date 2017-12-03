@@ -237,6 +237,7 @@ function init() {
              .add('dragon_boxes', 'imgs/dragon_hitbox.png')
              .add('police', 'imgs/police.png')
              .add('police_boxes', 'imgs/police_hitbox.png')
+             .add('car', 'imgs/car.png')
              .add('icons', 'imgs/icons.png')
              .add('particles', 'imgs/particles.png')
              .add('logo', 'imgs/logo.png')
