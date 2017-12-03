@@ -228,6 +228,7 @@ Police.prototype.update = function() {
     if (this.destroy_timer > 0) {
         if (--this.destroy_timer <= 0) {
             this.dead = true;
+            AMOUNT--;
             return;
         }
     }

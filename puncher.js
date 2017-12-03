@@ -206,6 +206,8 @@ function Puncher() {
     this.focus = null;
     this.targetDelay = 0;
     wantFocus(null, this);
+
+    AMOUNT++;
 };
 
 Puncher.prototype.selectFocus = function(side) {
@@ -372,6 +374,8 @@ Puncher.prototype.update = function() {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));
             }
+            AMOUNT--;
+
             return;
         }
     }

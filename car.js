@@ -29,6 +29,8 @@ function Car() {
     this.spawn = true;
 
     this.moveThroughWalls = true;
+
+    AMOUNT++;
 };
 
 Car.prototype.update = function() {

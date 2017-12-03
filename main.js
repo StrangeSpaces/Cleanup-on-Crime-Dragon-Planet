@@ -66,8 +66,16 @@ function pad(num, size) {
 
 var tick_count = 1;
 function animate() {
-    if (tick_count++ % 160 == 0) {
-      entities.push(new Puncher());
+    if (AMOUNT == 0 || ++tick_count >= 10 * 60) {
+        if (wave++ < waves[levelNum].count) {
+            tick_count = 0;
+            for (var i=0; i < waves[levelNum].amount; i++) {
+                entities.push(new Puncher());
+            }
+        } else {
+            levelNum++;
+            start();
+        }
     }
 
     updateFocus();
@@ -158,7 +166,6 @@ function loadLevel() {
         power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
         uiContainer.addChild(power);
 
-        scoreAmount = 0;
         score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Mini', align: 'right' });
         score.position.x = logicalWidth - 55;
         uiContainer.addChild(score);
@@ -192,6 +199,9 @@ function start() {
     leftPunch = null;
     rightPunch = null;
 
+    wave = 0;
+    AMOUNT = 0;
+
     mainContainer.removeChildren();
     frontContainer.removeChildren();
     uiContainer.removeChildren();
@@ -203,7 +213,12 @@ function start() {
 
     loadLevel();
 
-    player = new Player();
+    var p = new Player();
+    if (player && player.hp > 0) {
+        p.hp = player.hp;
+        p.power = player.power;
+    }
+    player = p;
     entities.push(player);
 };
 
@@ -255,6 +270,7 @@ function init() {
           properties: {}
       });
 
+      scoreAmount = 0;
       start();
 
       // kick off the animation loop (defined below)

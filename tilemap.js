@@ -1,7 +1,22 @@
 var level;
 var levelNum = 0;
 
+var wave = 0;
+
+var waves = [
+    {count: 1, amount: 2},
+    {count: 2, amount: 2},
+    {count: 3, amount: 2},
+    {count: 2, amount: 3},
+    {count: 4, amount: 3}
+]
+
+
 var levelOrder = [
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
     'CrimeDragonLand'
 ]
 
