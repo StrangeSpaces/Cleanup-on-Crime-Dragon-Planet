@@ -1,5 +1,5 @@
 function Label(text, pos) {
-    this.pos = new Vec(pos.x, pos.y);
+    this.pos = new Vec(pos.x - 6, pos.y);
     this.vel = new Vec(0, -0.5);
 
     this.label = [];

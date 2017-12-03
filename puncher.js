@@ -355,6 +355,7 @@ Puncher.prototype.damage = function(amount) {
     if (this.hp == 0) {
         this.behavior.changeState('dead');
         this.destroy_timer = 30;
+        this.icon_sprite.position.y = this.sprite.position.y;
         this.icon_sprite.texture.frame = new PIXI.Rectangle(64, 0, 32, 32);
     } else if (this.hp <= 300/16) {
         this.arresting = true;
@@ -424,5 +425,13 @@ Puncher.prototype.update = function() {
     this.sprite.scale.x = this.dir;
 
     Entity.prototype.update.call(this);
+
+    if (this.destroy_timer > 0) {
+        if (this.hp > 0) {
+            this.icon_sprite.position.y = this.sprite.position.y - 40 * this.destroy_timer/120;
+        } else {
+            this.icon_sprite.position.y = this.sprite.position.y - 40 * (30-this.destroy_timer)/30;
+        }
+    }
 };
 
