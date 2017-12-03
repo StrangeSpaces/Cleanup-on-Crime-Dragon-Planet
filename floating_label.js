@@ -1,0 +1,34 @@
+function Label(text, pos) {
+    this.pos = new Vec(pos.x, pos.y);
+    this.vel = new Vec(0, -0.5);
+
+    this.label = [];
+    this.hitstun = 0;
+    this.age = 0;
+
+    this.id = ++runningID;
+
+    this.text = text;
+    this.type = null;
+    this.sprite = new PIXI.extras.BitmapText(text, { font: '16px KenPixel Mini', align: 'center' });
+    frontContainer.addChild(this.sprite);
+}
+
+Label.prototype.updateGraphics = function() {
+    this.sprite.position.x = this.pos.x;
+    this.sprite.position.y = this.pos.y;
+
+    this.sprite.alpha = 1 - this.age/120;
+}
+
+Label.prototype.update = function() {
+    if (this.age++ == 120) {
+        this.dead = true;
+        return;
+    }
+
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+
+    this.updateGraphics();
+};

@@ -1,5 +1,5 @@
-var logicalWidth = 320;
-var logicalHeight = 232;
+var logicalWidth = 22 * 16;
+var logicalHeight = 16 * 16;
 
 var renderer = null;
 var stage = null;
@@ -114,6 +114,9 @@ function animate() {
     }
 
     score.text = pad(scoreAmount, 6);
+
+    frontContainer.position.x = currentContainer.position.x;
+    frontContainer.position.y = currentContainer.position.y;
 
     renderer.render(stage);
 

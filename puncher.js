@@ -364,9 +364,11 @@ Puncher.prototype.update = function() {
 
             if (this.hp <= 0) {
                 scoreAmount -= 300;
+                entities.push(new Label('-300', this.pos));
                 entities.push(new Police());
             } else {
                 scoreAmount += 150;
+                entities.push(new Label('150', this.pos));
             }
             return;
         }
