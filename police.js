@@ -192,6 +192,7 @@ Police.prototype.knockBack = function(obj) {
     this.hitstun = 3;
     obj.behavior.changeState('knock_back');
     obj.knockBackCounter = 20;
+    obj.damage(15);
 
     obj.vel.x = 0;
     obj.vel.y = 0;
@@ -262,7 +263,6 @@ Police.prototype.update = function() {
     this.frameNumber = this.behavior.frame.frame;
     this.sprite.scale.x = this.dir;
 
-    this.landed = false;
     Entity.prototype.update.call(this);
 };
 

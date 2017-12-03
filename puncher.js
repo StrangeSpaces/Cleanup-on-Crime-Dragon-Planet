@@ -284,9 +284,16 @@ Puncher.prototype.knockBack = function(obj) {
     this.hitstun = 3;
     obj.behavior.changeState('knock_back');
     obj.knockBackCounter = 20;
+    obj.damage(15);
 
     obj.vel.x = 0;
     obj.vel.y = 0;
+}
+
+Puncher.prototype.hitWall = function() {
+    if (this.states[this.behavior.state].canFocus && this.landed) {
+        this.vel.y = -4;
+    }
 }
 
 Puncher.prototype.hitGround = function() {
@@ -365,7 +372,6 @@ Puncher.prototype.update = function() {
     this.frameNumber = this.behavior.frame.frame;
     this.sprite.scale.x = this.dir;
 
-    this.landed = false;
     Entity.prototype.update.call(this);
 };
 

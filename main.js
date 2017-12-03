@@ -183,6 +183,12 @@ function loadLevel() {
 }
 
 function start() {
+    LF = [];
+    RF = [];
+
+    leftPunch = null;
+    rightPunch = null;
+
     mainContainer.removeChildren();
     frontContainer.removeChildren();
     uiContainer.removeChildren();

@@ -53,7 +53,6 @@ Projectile.prototype.update = function() {
     this.frameNumber = this.behavior.frame.frame;
     this.sprite.scale.x = this.dir;
 
-    this.landed = false;
     Entity.prototype.update.call(this);
 };
 

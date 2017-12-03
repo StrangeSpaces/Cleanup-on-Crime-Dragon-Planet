@@ -9,7 +9,7 @@ function Player() {
     this.halfWidth = 16;
 
     this.load_hitboxes('jane_boxes');
-    console.log(this.boxes);
+    this.createHP();
 
     this.type = PLAYER;
     this.dir = RIGHT;
@@ -179,6 +179,14 @@ Player.prototype.knockBack = function(obj) {
     SHAKE = knockBack / 1.2 + 0.5;
 }
 
+Player.prototype.damage = function(amount) {
+    this.hp = Math.max(this.hp - amount, 0);
+
+    if (this.hp <= 0) {
+        start();
+    }
+}
+
 Player.prototype.hitGround = function() {
     Entity.prototype.hitGround.call(this);
 
@@ -288,7 +296,6 @@ Player.prototype.update = function() {
     this.frameNumber = this.behavior.frame.frame;
     this.sprite.scale.x = this.dir;
 
-    this.landed = false;
     Entity.prototype.update.call(this);
 
     this.updateCamera();

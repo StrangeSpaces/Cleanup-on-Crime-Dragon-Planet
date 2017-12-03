@@ -267,6 +267,8 @@ Entity.prototype.updateGraphics = function() {
 Entity.prototype.update = function() {
     this.pos.x += this.vel.x + this.push.x;
     Tilemap.check(this, 0);
+
+    this.landed = false;
     this.pos.y += this.vel.y + this.push.y;
     Tilemap.check(this, 1);
 

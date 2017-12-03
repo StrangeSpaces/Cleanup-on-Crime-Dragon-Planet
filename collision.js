@@ -76,6 +76,7 @@ CollisionHandler.addCollision([true, PLAYER, PROJECTILE, function(player, projec
 
     player.vel.x = 0;
     player.vel.y = 0;
+    player.damage(8);
 
     projectile.dead = true
 }]);
