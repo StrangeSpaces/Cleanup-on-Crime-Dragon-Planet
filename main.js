@@ -57,6 +57,12 @@ function collision() {
     }
 }
 
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
 var tick_count = 0;
 function animate() {
     if (tick_count++ % 160 == 0) {
@@ -105,6 +111,8 @@ function animate() {
         SHAKE = Math.max(0, SHAKE - 0.2);
     }
 
+    score.text = pad(scoreAmount, 6);
+
     renderer.render(stage);
 
     currentContainer.position.x = oldX;
@@ -144,6 +152,11 @@ function loadLevel() {
 
         power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
         uiContainer.addChild(power);
+
+        scoreAmount = 0;
+        score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Mini', align: 'right' });
+        score.position.x = logicalWidth - 50;
+        uiContainer.addChild(score);
 
     //     heart = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 64, 48, 32)));
     //     uiContainer.addChild(heart);
@@ -216,6 +229,7 @@ function init() {
              .add('logo', 'imgs/logo.png')
              .add('cb', 'imgs/crab_hitbox.png')
              .add('jane', 'imgs/jane_sheet.png')
+             .add('kenpixel', 'imgs/ken.fnt')
              .add('ealpha', 'imgs/ealpha.png').load(function (loader, res) {
       resources = res;
 

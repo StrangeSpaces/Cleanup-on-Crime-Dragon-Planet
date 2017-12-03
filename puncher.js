@@ -189,9 +189,11 @@ Puncher.prototype.damage = function(amount) {
         this.behavior.changeState('dead');
         this.destroy_timer = 30;
         this.icon_sprite.texture.frame = new PIXI.Rectangle(64, 0, 32, 32);
+        scoreAmount -= 300;
+        scoreAmount = Math.max(0, scoreAmount);
     } else if (this.hp <= 300/16) {
         this.arresting = true;
-        new PIXI.Rectangle(0, 0, Math.ceil(this.hp * 16/100), 4);
+        scoreAmount += 150;
     }
 }
 
