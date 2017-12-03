@@ -204,6 +204,7 @@ function Puncher() {
     this.destroy_timer = 0;
 
     this.focus = null;
+    this.targetDelay = 0;
     wantFocus(null, this);
 };
 
@@ -239,6 +240,8 @@ Puncher.prototype.think = function() {
     }
 
     if (this.focus != null) {
+        this.target = null;
+
         var dist = Math.abs(player.pos.x - this.pos.x);
         if (dist < 28) {
             this.vel.x = 0;
@@ -261,6 +264,33 @@ Puncher.prototype.think = function() {
                 this.haveBeenHit = {};
                 this.stab_wait = 66*2;
                 return;
+            }
+        }
+    } else {
+        if (!this.target) {
+            if (this.targetDelay <= 0) {
+                var d = Math.random() * 290 + 60;
+
+                if (player.pos.x > this.pos.x) {
+                    d = -d;
+                }
+                this.target = player.pos.x + d;
+            } else {
+                this.targetDelay--;
+            }
+        } else {
+            if (this.target > this.pos.x) {
+                this.vel.x += this.speed;
+                this.dir = -1;
+            } else {
+                this.vel.x -= this.speed;
+                this.dir = 1;
+            }
+
+            if (Math.abs(this.target - this.pos.x) <= Math.abs(this.vel.x)) {
+                this.target = null;
+                this.targetDelay = 30;
+                this.vel.x = 0
             }
         }
     }
