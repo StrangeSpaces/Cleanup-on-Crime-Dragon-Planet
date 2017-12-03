@@ -369,7 +369,10 @@ Puncher.prototype.update = function() {
             if (this.hp <= 0) {
                 scoreAmount -= 300;
                 entities.push(new Label('-300', this.pos));
-                entities.push(new Car());
+                STARS += 0.8
+                if (Math.floor(Math.max(STARS-0.8, 0)) < Math.floor(STARS)) {
+                    entities.push(new Car());
+                }
             } else {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));

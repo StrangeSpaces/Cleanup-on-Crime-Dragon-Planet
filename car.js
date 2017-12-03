@@ -26,23 +26,24 @@ function Car() {
     this.vel.x = -2;
 
     this.behavior = new Behavior(this.states, this);
-    this.spawn = true;
 
     this.moveThroughWalls = true;
 
-    AMOUNT++;
+    this.star = Math.floor(STARS);
+    this.spawn = this.star;
+    AMOUNT += this.star;
 };
 
 Car.prototype.update = function() {
     this.behavior.update(1);
     this.frameNumber = this.behavior.frame.frame;
 
-    if (this.pos.x < logicalWidth/2 && this.spawn) {
-        var pol = new Police();
-        pol.pos.y = this.pos.y;
-        pol.pos.x = this.pos.x;
-        entities.push(pol);
-        this.spawn = false;
+    if (this.pos.x < logicalWidth*(this.spawn)/(1+this.star) && this.spawn > 0) {
+            var pol = new Police();
+            pol.pos.y = this.pos.y;
+            pol.pos.x = this.pos.x;
+            entities.push(pol);
+            this.spawn--;
     }
 
     Entity.prototype.update.call(this);
