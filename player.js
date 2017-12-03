@@ -155,7 +155,7 @@ Player.prototype.knockBack = function(obj) {
     obj.vel.x = 0;
     obj.vel.y = 0;
 
-    SHAKE = knockBack / 1.2;
+    SHAKE = knockBack / 1;
 }
 
 Player.prototype.hitGround = function() {
@@ -169,6 +169,7 @@ Player.prototype.hitGround = function() {
         }
 
         this.behavior.changeState('idle');
+        land.play();
     }
 }
 
@@ -195,6 +196,12 @@ Player.prototype.standardInput = function() {
         if (Key.pressed(Key.JUMP) && (this.landed || this.doubleJump)) {
             this.behavior.changeState('air_rise');
             this.vel.y = -5;
+
+            if (this.landed) {
+                jump.play();
+            } else {
+                doubleJump.play();
+            }
             this.doubleJump = this.landed;
         }
 
