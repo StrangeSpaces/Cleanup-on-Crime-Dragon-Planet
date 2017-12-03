@@ -46,27 +46,27 @@ var Tilemap = {
     tileSize: 16,
 
     init: function() {
-        for (var y = 0; y < tileMapHeight; y++) {
-            for (var x = 0; x < tileMapWidth; x++) {
-                this.place(bg[y * tileMapWidth + x] - 1, x, y, currentContainer);
-            }
-        }
-        for (var y = 0; y < tileMapHeight; y++) {
-            for (var x = 0; x < tileMapWidth; x++) {
-                this.place(tiles[y * tileMapWidth + x] - 1, x, y, currentContainer);
-            }
-        }
-        for (var y = 0; y < tileMapHeight; y++) {
-            for (var x = 0; x < tileMapWidth; x++) {
-                this.place(placement[y * tileMapWidth + x] - 1, x, y, currentContainer);
-            }
-        }
-        for (var y = 0; y < tileMapHeight; y++) {
-            for (var x = 0; x < tileMapWidth; x++) {
-                var tile = fg[y * tileMapWidth + x] - 1;
-                this.place(tile, x, y, frontContainer);
-            }
-        }
+        // for (var y = 0; y < tileMapHeight; y++) {
+        //     for (var x = 0; x < tileMapWidth; x++) {
+        //         this.place(bg[y * tileMapWidth + x] - 1, x, y, currentContainer);
+        //     }
+        // }
+        // for (var y = 0; y < tileMapHeight; y++) {
+        //     for (var x = 0; x < tileMapWidth; x++) {
+        //         this.place(tiles[y * tileMapWidth + x] - 1, x, y, currentContainer);
+        //     }
+        // }
+        // for (var y = 0; y < tileMapHeight; y++) {
+        //     for (var x = 0; x < tileMapWidth; x++) {
+        //         this.place(placement[y * tileMapWidth + x] - 1, x, y, currentContainer);
+        //     }
+        // }
+        // for (var y = 0; y < tileMapHeight; y++) {
+        //     for (var x = 0; x < tileMapWidth; x++) {
+        //         var tile = fg[y * tileMapWidth + x] - 1;
+        //         this.place(tile, x, y, frontContainer);
+        //     }
+        // }
         // for (var y = 0; y < tileMapHeight; y++) {
         //     for (var x = 0; x < tileMapWidth; x++) {
         //         var ent = placement[y * tileMapWidth + x] - 1;

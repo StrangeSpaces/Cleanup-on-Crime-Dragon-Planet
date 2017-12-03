@@ -22,7 +22,7 @@ function Car() {
     }
 
     this.pos.x = logicalWidth + 25;
-    this.pos.y = logicalHeight - 32 - 24;
+    this.pos.y = logicalHeight - 16 - 24;
     this.vel.x = -2;
 
     this.behavior = new Behavior(this.states, this);

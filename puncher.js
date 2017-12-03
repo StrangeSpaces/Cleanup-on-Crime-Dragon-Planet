@@ -190,7 +190,7 @@ function Puncher() {
     }
 
     this.pos.x = logicalWidth + 100 * Math.random();
-    this.pos.y = logicalHeight - 32 - this.halfHeight;
+    this.pos.y = logicalHeight - 16 - this.halfHeight;
 
     this.max_speed = 2;
     this.friction = 0.05;

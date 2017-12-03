@@ -1,5 +1,5 @@
-var logicalWidth = 22 * 16;
-var logicalHeight = 16 * 16;
+var logicalWidth = 336;
+var logicalHeight = 176;
 
 var renderer = null;
 var stage = null;
@@ -209,6 +209,8 @@ function start() {
     frontContainer.removeChildren();
     uiContainer.removeChildren();
 
+    mainContainer.addChild(new PIXI.Sprite(new PIXI.Texture(resources['bg'].texture)));
+
     // mainContainer.alpha = 0;
     // frontContainer.alpha = 0;
     // uiContainer.alpha = 0;
@@ -255,6 +257,7 @@ function init() {
   
   PIXI.loader.add('tiles', 'imgs/tiles.png')
              .add('jane_boxes', 'imgs/jane_hitbox.png')
+             .add('bg', 'imgs/bg.png')
              .add('ui', 'imgs/ui.png')
              .add('eneg', 'imgs/eneg.png')
              .add('dragon', 'imgs/dragon.png')
