@@ -1,11 +1,11 @@
-Puncher.prototype = Object.create(Entity.prototype);
-Puncher.prototype.parent = Entity.prototype;
+Police.prototype = Object.create(Entity.prototype);
+Police.prototype.parent = Entity.prototype;
 
-function Puncher() {
-    Entity.call(this, 'dragon', 64, 48);
+function Police() {
+    Entity.call(this, 'police', 96, 48);
     this.createHP();
 
-    this.load_hitboxes('dragon_boxes');
+    this.load_hitboxes('police_boxes');
     this.halfWidth = 16;
 
     this.type = PUNCHER;
@@ -49,7 +49,7 @@ function Puncher() {
         },
         knock_back: {
             frames: [
-                { duration: 1000000, frame: 12 }
+                { duration: 1000000, frame: 8 }
             ],
             isAirState: true,
             cancelable: false,
@@ -63,7 +63,7 @@ function Puncher() {
         },
         dead: {
             frames: [
-                { duration: 1000000, frame: 12 }
+                { duration: 1000000, frame: 8 }
             ],
             isAirState: true,
             exit: function(self) {
@@ -72,10 +72,9 @@ function Puncher() {
         },
         stab: {
             frames: [
-                { duration: 6, frame: 8 },
-                { duration: 6, frame: 9 },
-                { duration: 6, frame: 10 },
-                { duration: 6, frame: 11, after: 'idle' },
+                { duration: 6, frame: 12 },
+                { duration: 6, frame: 13 },
+                { duration: 6, frame: 14, after: 'idle' },
             ],
             moveable: false
         },
@@ -110,7 +109,7 @@ function Puncher() {
     this.destroy_timer = 0;
 };
 
-Puncher.prototype.think = function() {
+Police.prototype.think = function() {
     if (player.pos.x > this.pos.x) {
         this.dir = -1;
     } else {
@@ -149,7 +148,7 @@ Puncher.prototype.think = function() {
     }
 }
 
-Puncher.prototype.knockBack = function(obj) {
+Police.prototype.knockBack = function(obj) {
     if (this.haveBeenHit[obj]) {
         return;
     }
@@ -166,7 +165,7 @@ Puncher.prototype.knockBack = function(obj) {
     obj.vel.y = 0;
 }
 
-Puncher.prototype.hitGround = function() {
+Police.prototype.hitGround = function() {
     Entity.prototype.hitGround.call(this);
 
     if (this.states[this.behavior.state].isAirState) {
@@ -178,33 +177,24 @@ Puncher.prototype.hitGround = function() {
     }
 }
 
-Puncher.prototype.reducePower = function(amount) {
+Police.prototype.reducePower = function(amount) {
     this.power = Math.max(this.power - amount, 0)
 }
 
-Puncher.prototype.damage = function(amount) {
+Police.prototype.damage = function(amount) {
     this.hp = Math.max(this.hp - amount, 0);
 
     if (this.hp == 0) {
         this.behavior.changeState('dead');
         this.destroy_timer = 30;
         this.icon_sprite.texture.frame = new PIXI.Rectangle(64, 0, 32, 32);
-    } else if (this.hp <= 300/16) {
-        this.arresting = true;
     }
 }
 
-Puncher.prototype.update = function() {
+Police.prototype.update = function() {
     if (this.destroy_timer > 0) {
         if (--this.destroy_timer <= 0) {
             this.dead = true;
-
-            if (this.hp <= 0) {
-                scoreAmount -= 300;
-                scoreAmount = Math.max(0, scoreAmount);
-            } else {
-                scoreAmount += 150;
-            }
             return;
         }
     }

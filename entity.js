@@ -182,7 +182,6 @@ Entity.prototype.load_hitboxes_frame = function(pixels, w, start_x, start_y, wid
 Entity.prototype.getPixels = function(file) {
     var w = resources[file].texture.width;
     var h = resources[file].texture.height;
-    console.log(w);
     var renderTexture = PIXI.RenderTexture.create(w, h);
     var sprite = new PIXI.Sprite(new PIXI.Texture(resources[file].texture));
     renderer.render(sprite, renderTexture);

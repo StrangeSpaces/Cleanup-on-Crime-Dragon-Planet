@@ -66,7 +66,7 @@ function pad(num, size) {
 var tick_count = 0;
 function animate() {
     if (tick_count++ % 160 == 0) {
-      entities.push(new Puncher());
+      entities.push(new Police());
     }
 
     for (var i = entities.length - 1; i >= 0; i--) {
@@ -224,6 +224,8 @@ function init() {
              .add('eneg', 'imgs/eneg.png')
              .add('dragon', 'imgs/dragon.png')
              .add('dragon_boxes', 'imgs/dragon_hitbox.png')
+             .add('police', 'imgs/police.png')
+             .add('police_boxes', 'imgs/police_hitbox.png')
              .add('icons', 'imgs/icons.png')
              .add('particles', 'imgs/particles.png')
              .add('logo', 'imgs/logo.png')
