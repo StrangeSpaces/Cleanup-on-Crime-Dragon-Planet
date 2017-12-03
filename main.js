@@ -70,6 +70,7 @@ function animate() {
       entities.push(new Puncher());
     }
 
+    updateFocus();
     for (var i = entities.length - 1; i >= 0; i--) {
         if (entities[i]) {
             if (entities[i].hitstun <= 0) {

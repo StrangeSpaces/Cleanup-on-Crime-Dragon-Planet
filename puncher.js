@@ -1,6 +1,60 @@
 Puncher.prototype = Object.create(Entity.prototype);
 Puncher.prototype.parent = Entity.prototype;
 
+var LF = [];
+var RF = [];
+
+var leftPunch;
+var rightPunch;
+
+function loseFocus(side, puncher) {
+    if (side == -1) {
+        if (puncher != leftPunch) return;
+        leftPunch = null;
+        for (var i = 0; i < LF.length; i++) {
+            if (LF[i].selectFocus(-1)) {
+                leftPunch = LF.splice(i, 1)[0];
+                return;
+            }
+        }
+    } else {
+        if (puncher != rightPunch) return;
+        rightPunch = null;
+        for (var i = 0; i < RF.length; i++) {
+            if (RF[i].selectFocus(1)) {
+                rightPunch = RF.splice(i, 1)[0];
+                return;
+            }
+        }
+    }
+}
+
+function wantFocus(side, puncher) {
+    // if (side == -1) {
+        LF.push(puncher);
+    // } else {
+        RF.push(puncher);
+    // }
+}
+
+function updateFocus() {
+    LF.sort(function(a, b) {
+        return Math.abs(a.pos.x - player.pos.x) - Math.abs(b.pos.x - player.pos.x);
+    });
+
+    RF.sort(function(a, b) {
+        return Math.abs(a.pos.x - player.pos.x) - Math.abs(b.pos.x - player.pos.x);
+    });
+
+    if (!leftPunch) {
+        loseFocus(-1);
+    }
+
+    if (!rightPunch) {
+        loseFocus(1);
+    }
+}
+
 function Puncher() {
     Entity.call(this, 'dragon', 64, 48);
     this.createHP();
@@ -18,7 +72,46 @@ function Puncher() {
             ],
             update: function(self) {
                 self.think();
+            },
+            canFocus: true
+        },
+        flee: {
+            frames: [
+                { duration: 6, frame: 4 },
+                { duration: 6, frame: 5 },
+                { duration: 6, frame: 6 },
+                { duration: 6, frame: 7, after: 'idle' },
+            ],
+            enter: function(self) {
+                loseFocus(self.focus, self);
+                wantFocus(null, self);
+                self.focus = null;
+            },
+            update: function(self) {
+                if (player.pos.x < self.pos.x) {
+                    self.vel.x += self.speed;
+                    self.dir = -1;
+                } else {
+                    self.vel.x -= self.speed;
+                    self.dir = 1;
+                }
             }
+        },
+        consider: {
+            frames: [
+                { duration: 18, frame: 0, },
+                { duration: 0, action: function(self) {
+                    var percent = Math.random();
+                    if (percent < 0.2) {
+                        self.facePlayer();
+                        self.behavior.changeState('stab');
+                    } else if (percent < 0.7) {
+                        self.behavior.changeState('idle');
+                    } else {
+                        self.behavior.changeState('flee');
+                    }
+                } }
+            ],
         },
         run: {
             frames: [
@@ -29,7 +122,8 @@ function Puncher() {
             ],
             update: function(self) {
                 self.think();
-            }
+            },
+            canFocus: true
         },
         air_rise: {
             frames: [
@@ -75,7 +169,7 @@ function Puncher() {
                 { duration: 6, frame: 8 },
                 { duration: 6, frame: 9 },
                 { duration: 6, frame: 10 },
-                { duration: 6, frame: 11, after: 'idle' },
+                { duration: 6, frame: 11, after: 'flee' },
             ],
             moveable: false
         },
@@ -108,7 +202,34 @@ function Puncher() {
 
     this.haveBeenHit = {};
     this.destroy_timer = 0;
+
+    this.focus = null;
+    wantFocus(null, this);
 };
+
+Puncher.prototype.selectFocus = function(side) {
+    if (this.focus != null || !this.states[this.behavior.state].canFocus) return;
+
+    if (side == -1) {
+        if (player.pos.x > this.pos.x) {
+            this.focus = -1;
+            return true;
+        }
+    } else {
+        if (player.pos.x < this.pos.x) {
+            this.focus = 1;
+            return true;
+        }
+    }
+}
+
+Puncher.prototype.facePlayer = function() {
+    if (player.pos.x > this.pos.x) {
+        this.dir = -1;
+    } else {
+        this.dir = 1;
+    }
+}
 
 Puncher.prototype.think = function() {
     if (player.pos.x > this.pos.x) {
@@ -117,28 +238,30 @@ Puncher.prototype.think = function() {
         this.dir = 1;
     }
 
-    var dist = Math.abs(player.pos.x - this.pos.x);
-    if (dist < 28) {
-        this.vel.x = 0;
+    if (this.focus != null) {
+        var dist = Math.abs(player.pos.x - this.pos.x);
+        if (dist < 28) {
+            this.vel.x = 0;
 
-        if (this.stab_wait <= 0) {
-            this.behavior.changeState('stab');
-            this.haveBeenHit = {};
-            this.stab_wait = 66*2;
-            return;
-        }
-    } else if (dist > 40) {
-        if (player.pos.x > this.pos.x) {
-            this.vel.x += this.speed;
+            if (this.stab_wait <= 0) {
+                this.behavior.changeState('stab');
+                this.haveBeenHit = {};
+                this.stab_wait = 66*2;
+                return;
+            }
+        } else if (dist > 40) {
+            if (player.pos.x > this.pos.x) {
+                this.vel.x += this.speed;
+            } else {
+                this.vel.x -= this.speed;
+            }
         } else {
-            this.vel.x -= this.speed;
-        }
-    } else {
-        if (this.stab_wait <= 0) {
-            this.behavior.changeState('stab');
-            this.haveBeenHit = {};
-            this.stab_wait = 66*2;
-            return;
+            if (this.stab_wait <= 0) {
+                this.behavior.changeState('stab');
+                this.haveBeenHit = {};
+                this.stab_wait = 66*2;
+                return;
+            }
         }
     }
 
@@ -185,12 +308,15 @@ Puncher.prototype.reducePower = function(amount) {
 Puncher.prototype.damage = function(amount) {
     this.hp = Math.max(this.hp - amount, 0);
 
+    loseFocus(this.focus, this);
     if (this.hp == 0) {
         this.behavior.changeState('dead');
         this.destroy_timer = 30;
         this.icon_sprite.texture.frame = new PIXI.Rectangle(64, 0, 32, 32);
     } else if (this.hp <= 300/16) {
         this.arresting = true;
+    } else {
+        wantFocus(null, this);
     }
 }
 
@@ -217,7 +343,7 @@ Puncher.prototype.update = function() {
                 this.icon_sprite.texture.frame = new PIXI.Rectangle(0, 0, 32, 32);
                 this.destroy_timer = 120;
             } else {
-                this.behavior.changeState('idle');
+                this.behavior.changeState('consider');
             }
         }
     }

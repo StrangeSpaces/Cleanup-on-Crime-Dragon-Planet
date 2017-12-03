@@ -81,10 +81,31 @@ CollisionHandler.addCollision([true, PLAYER, PROJECTILE, function(player, projec
 }]);
 
 // CollisionHandler.addCollision([false, PUNCHER, PUNCHER, function(a, b) {
-//     console.log('boo');
-//     if (a.pos.x < b.pos.x) {
-//         a.pos.x = b.left() - a.halfWidth;
-//     } else {
-//         b.pos.x = a.left() - b.halfWidth;
-//     }
+//     // var as = a.behavior.state;
+//     // var bs = b.behavior.state;
+//     // if (as == 'knock_back' && bs != 'knock_back') {
+//     //     a.hitstun = 1;
+//     //     b.hitstun = 1;
+
+//     //     b.behavior.changeState('knock_back');
+//     //     b.knockBackCounter = a.knockBackCounter;
+
+//     //     b.vel.x = 0;
+//     //     b.vel.y = 0;
+
+//     //     b.push.x = a.push.x;
+//     //     b.push.y = a.push.y;
+//     // } else if (as != 'knock_back' && bs == 'knock_back') {
+//     //     b.hitstun = 1;
+//     //     a.hitstun = 1;
+
+//     //     a.behavior.changeState('knock_back');
+//     //     a.knockBackCounter = b.knockBackCounter;
+
+//     //     a.vel.x = 0;
+//     //     a.vel.y = 0;
+
+//     //     a.push.x = a.push.x;
+//     //     a.push.y = a.push.y;
+//     // }
 // }]);
