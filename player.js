@@ -119,6 +119,7 @@ function Player() {
             },
             exit: function(self) {
                 self.friction = 0.05;
+                self.slide_cool = 12;
             },
             moveable: false,
         }
@@ -131,6 +132,7 @@ function Player() {
     this.friction = 0.05;
     this.speed = 0.2
 
+    this.slide_cool = 0;
     this.power = 0;
     this.lastDisplayedPower = 0;
     this.doubleJump = true;
@@ -243,10 +245,12 @@ Player.prototype.standardInput = function() {
                     this.haveBeenHit = {};
                     uppercut.play();
                 } else if (Key.isDown(Key.DOWN)) {
-                    this.behavior.changeState('slide');
-                    this.reducePower(0.22);
-                    this.haveBeenHit = {};
-                    uppercut.play();
+                    if (this.slide_cool <= 0) {
+                        this.behavior.changeState('slide');
+                        this.reducePower(0.22);
+                        this.haveBeenHit = {};
+                        uppercut.play();
+                    }
                 } else {
                     this.behavior.changeState('punch');
                     this.reducePower(0.12);
@@ -272,6 +276,7 @@ Player.prototype.reducePower = function(amount) {
 Player.prototype.update = function() {
     Key.update();
 
+    this.slide_cool--;
     if (this.knockBackCounter > 0) {
         if (--this.knockBackCounter <= 0) {
             this.behavior.changeState('idle');

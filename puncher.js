@@ -189,8 +189,8 @@ function Puncher() {
         }
     }
 
-    this.pos.x = Math.random() * logicalWidth;
-    this.pos.y = 50;
+    this.pos.x = logicalWidth + 100 * Math.random();
+    this.pos.y = logicalHeight - 32 - this.halfHeight;
 
     this.max_speed = 2;
     this.friction = 0.05;
@@ -206,6 +206,8 @@ function Puncher() {
     this.focus = null;
     this.targetDelay = 0;
     wantFocus(null, this);
+
+    this.moveThroughWalls = true;
 
     AMOUNT++;
 };
@@ -362,6 +364,15 @@ Puncher.prototype.damage = function(amount) {
 }
 
 Puncher.prototype.update = function() {
+    if (this.moveThroughWalls == true) {
+        this.landed = true
+        if (this.right() < logicalWidth) {
+            this.moveThroughWalls = false;
+        }
+    } else {
+        this.vel.y += 0.2;
+    }
+
     if (this.destroy_timer > 0) {
         if (--this.destroy_timer <= 0) {
             this.dead = true;
@@ -407,7 +418,6 @@ Puncher.prototype.update = function() {
     } else {
         this.vel.x = 0;
     }
-    this.vel.y += 0.2;
 
     this.behavior.update(1);
     this.frameNumber = this.behavior.frame.frame;

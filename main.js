@@ -191,7 +191,7 @@ function loadLevel() {
 
         requestAnimationFrame(f);
     }
-    f();
+    // f();
 }
 
 function start() {
@@ -209,19 +209,25 @@ function start() {
     frontContainer.removeChildren();
     uiContainer.removeChildren();
 
-    mainContainer.alpha = 0;
-    frontContainer.alpha = 0;
-    uiContainer.alpha = 0;
+    // mainContainer.alpha = 0;
+    // frontContainer.alpha = 0;
+    // uiContainer.alpha = 0;
     entities.length = 0;
+
+    if (player && player.hp <= 0) {
+        levelNum = 0;
+        STARS = 0;
+        scoreAmount = 0;
+    }
 
     loadLevel();
 
-    var p = new Player();
     if (player && player.hp > 0) {
-        p.hp = player.hp;
-        p.power = player.power;
+        mainContainer.addChild(player.sprite);
+        mainContainer.addChild(player.hp_sprite);
+    } else {
+        player = new Player();
     }
-    player = p;
     entities.push(player);
 };
 
