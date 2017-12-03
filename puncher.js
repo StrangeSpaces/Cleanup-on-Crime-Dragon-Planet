@@ -201,7 +201,7 @@ Puncher.prototype.update = function() {
 
             if (this.hp <= 0) {
                 scoreAmount -= 300;
-                scoreAmount = Math.max(0, scoreAmount);
+                entities.push(new Police());
             } else {
                 scoreAmount += 150;
             }

@@ -103,6 +103,24 @@ function Player() {
             ],
             isAirState: true,
             moveable: false,
+        },
+        slide: {
+            frames: [
+                { duration: 3, frame: 42 },
+                { duration: 3, frame: 43 },
+                { duration: 6, frame: 44 },
+                { duration: 6, frame: 45 },
+                { duration: 6, frame: 5, after: 'idle' },
+            ],
+            enter: function(self) {
+                self.friction = 0;
+                self.vel.x = self.dir * self.max_speed;
+                self.push.x = self.dir * 1;
+            },
+            exit: function(self) {
+                self.friction = 0.05;
+            },
+            moveable: false,
         }
     }
 
@@ -134,6 +152,9 @@ Player.prototype.knockBack = function(obj) {
     if (state == 'punch') {
         knockBack = 2 + 3 * this.power;
         obj.push.x = this.dir * knockBack;
+    } else if (state == 'slide') {
+        knockBack = 1.5 + 2.5 * this.power;
+        obj.push.x = this.dir * knockBack * 1.5;
     } else if (state == 'upper_cut') {
         knockBack = 3 + 3 * this.power;
         obj.push.y = -knockBack * 1.8;
@@ -155,7 +176,7 @@ Player.prototype.knockBack = function(obj) {
     obj.vel.x = 0;
     obj.vel.y = 0;
 
-    SHAKE = knockBack / 1;
+    SHAKE = knockBack / 1.2 + 0.5;
 }
 
 Player.prototype.hitGround = function() {
@@ -209,6 +230,11 @@ Player.prototype.standardInput = function() {
             if (Key.pressed(Key.P)) {
                 if (Key.isDown(Key.UP)) {
                     this.behavior.changeState('upper_cut');
+                    this.reducePower(0.22);
+                    this.haveBeenHit = {};
+                    uppercut.play();
+                } else if (Key.isDown(Key.DOWN)) {
+                    this.behavior.changeState('slide');
                     this.reducePower(0.22);
                     this.haveBeenHit = {};
                     uppercut.play();

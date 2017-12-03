@@ -58,15 +58,16 @@ function collision() {
 }
 
 function pad(num, size) {
-    var s = num+"";
+    var s = Math.abs(num)+"";
     while (s.length < size) s = "0" + s;
+    if (num < 0) s = "-" + s;
     return s;
 }
 
 var tick_count = 0;
 function animate() {
     if (tick_count++ % 160 == 0) {
-      entities.push(new Police());
+      entities.push(new Puncher());
     }
 
     for (var i = entities.length - 1; i >= 0; i--) {
@@ -155,7 +156,7 @@ function loadLevel() {
 
         scoreAmount = 0;
         score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Mini', align: 'right' });
-        score.position.x = logicalWidth - 50;
+        score.position.x = logicalWidth - 55;
         uiContainer.addChild(score);
 
     //     heart = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 64, 48, 32)));
