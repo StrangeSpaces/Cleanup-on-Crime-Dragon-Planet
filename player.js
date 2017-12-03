@@ -52,11 +52,13 @@ function Player() {
                 { duration: 6, frame: 14 },
             ],
             update: function(self) {
-                self.standardInput();
-
                 if (self.vel.y > 0) {
                     self.behavior.changeState('air_fall');
+                } else if (!Key.isDown(Key.JUMP)) {
+                    self.vel.y *= 0.9;
                 }
+                
+                self.standardInput();
             },
             isAirState: true
         },
@@ -94,8 +96,8 @@ function Player() {
         },
         kick: {
             frames: [
-                { duration: 6, frame: 35 },
-                { duration: 6, frame: 36 },
+                { duration: 3, frame: 35 },
+                { duration: 3, frame: 36 },
                 { duration: 6, frame: 37 },
                 { duration: 6, frame: 38, after: 'air_rise' },
             ],
@@ -127,7 +129,7 @@ Player.prototype.knockBack = function(obj) {
 
 
     var state = this.behavior.state;
-    var knockBack = 1;
+    var knockBack = 0;
 
     if (state == 'punch') {
         knockBack = 2 + 3 * this.power;
@@ -140,6 +142,7 @@ Player.prototype.knockBack = function(obj) {
         obj.push.x = this.dir * knockBack * Math.cos(0.2);
         obj.push.y = -knockBack * Math.sin(0.2);
     }
+    if (knockBack == 0) return;
 
     impacts[5 - Math.min(Math.floor(this.power / 0.16), 5)].play();
 

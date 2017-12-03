@@ -90,6 +90,9 @@ Entity.prototype.createHP = function() {
     this.hp_sprite = new PIXI.Sprite(new PIXI.Texture(resources['tiles'].texture, new PIXI.Rectangle(0, 0, 16, 4)));
     this.hp = 100;
     currentContainer.addChild(this.hp_sprite);
+
+    this.icon_sprite = new PIXI.Sprite(new PIXI.Texture(resources['icons'].texture, new PIXI.Rectangle(0, 0, 0, 32)));
+    currentContainer.addChild(this.icon_sprite);
 }
 
 Entity.prototype.load_hitboxes = function(file) {
@@ -241,6 +244,9 @@ Entity.prototype.updateGraphics = function() {
     if (this.hp_sprite) {
         this.hp_sprite.position.x = this.sprite.position.x - 8;
         this.hp_sprite.position.y = this.sprite.position.y - 16;
+
+        this.icon_sprite.position.x = this.sprite.position.x - 16;
+        this.icon_sprite.position.y = this.sprite.position.y - 40;
 
         this.hp_sprite.texture.frame = new PIXI.Rectangle(0, 0, Math.ceil(this.hp * 16/100), 4);
     }

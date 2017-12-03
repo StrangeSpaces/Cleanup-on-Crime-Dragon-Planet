@@ -203,6 +203,7 @@ function init() {
              .add('eneg', 'imgs/eneg.png')
              .add('dragon', 'imgs/dragon.png')
              .add('dragon_boxes', 'imgs/dragon_hitbox.png')
+             .add('icons', 'imgs/icons.png')
              .add('particles', 'imgs/particles.png')
              .add('logo', 'imgs/logo.png')
              .add('cb', 'imgs/crab_hitbox.png')

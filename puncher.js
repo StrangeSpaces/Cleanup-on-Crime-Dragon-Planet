@@ -186,8 +186,10 @@ Puncher.prototype.damage = function(amount) {
 
     if (this.hp == 0) {
         this.behavior.changeState('dead');
+        this.icon_sprite.texture.frame = new PIXI.Rectangle(64, 0, 32, 32);
     } else if (this.hp <= 300/16) {
         this.arresting = true;
+        new PIXI.Rectangle(0, 0, Math.ceil(this.hp * 16/100), 4);
     }
 }
 
@@ -197,6 +199,7 @@ Puncher.prototype.update = function() {
         if (--this.knockBackCounter <= 0) {
             if (this.arresting) {
                 this.behavior.changeState('arresting');
+                this.icon_sprite.texture.frame = new PIXI.Rectangle(0, 0, 32, 32);
             } else {
                 this.behavior.changeState('idle');
             }
