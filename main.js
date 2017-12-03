@@ -201,6 +201,7 @@ function start() {
 
     wave = 0;
     AMOUNT = 0;
+    tick_count = 1;
 
     mainContainer.removeChildren();
     frontContainer.removeChildren();
