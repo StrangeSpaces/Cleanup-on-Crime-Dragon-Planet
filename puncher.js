@@ -269,7 +269,7 @@ Puncher.prototype.think = function() {
     } else {
         if (!this.target) {
             if (this.targetDelay <= 0) {
-                var d = Math.random() * 290 + 60;
+                var d = Math.random() * 200 + 60;
 
                 if (player.pos.x > this.pos.x) {
                     d = -d;
