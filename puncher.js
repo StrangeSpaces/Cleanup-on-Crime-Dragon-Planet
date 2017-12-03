@@ -327,9 +327,9 @@ Puncher.prototype.knockBack = function(obj) {
 }
 
 Puncher.prototype.hitWall = function() {
-    if (this.states[this.behavior.state].canFocus && this.landed) {
-        this.vel.y = -4;
-    }
+    // if (this.states[this.behavior.state].canFocus && this.landed) {
+    //     this.vel.y = -4;
+    // }
 }
 
 Puncher.prototype.hitGround = function() {

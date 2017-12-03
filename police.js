@@ -149,26 +149,40 @@ Police.prototype.think = function() {
         if (this.stab_wait <= 0) {
             this.behavior.changeState('stab');
             this.haveBeenHit = {};
-            this.stab_wait = 120;
+            this.stab_wait = 90;
             return;
         }
     } else if (dist > 40) {
-        if (player.pos.x > this.pos.x) {
-            this.vel.x += this.speed;
-        } else {
-            this.vel.x -= this.speed;
+        if (this.shoot_wait <= 0 && this.stab_wait <= 30) {
+            if (player.pos.x > this.pos.x) {
+                this.vel.x += this.speed;
+            } else {
+                this.vel.x -= this.speed;
+            }
+        } else if (this.shoot_wait <= 60 && this.stab_wait <= 60) {
+            if (player.pos.x < this.pos.x) {
+                this.vel.x += this.speed;
+            } else {
+                this.vel.x -= this.speed;
+            }
+
+            if (this.pos.x < 20) {
+                this.vel.x = 0;
+            } else if (this.pos.x > logicalWidth - 20) {
+                this.vel.x = 0;
+            }
         }
 
         if (dist > 60 && this.shoot_wait <= 0 && Math.random() * 100 <= 1) {
             this.behavior.changeState('shoot');
-            this.shoot_wait = 140;
+            this.shoot_wait = 100;
             return;
         }
     } else {
         if (this.stab_wait <= 0) {
             this.behavior.changeState('stab');
             this.haveBeenHit = {};
-            this.stab_wait = 120;
+            this.stab_wait = 90;
             return;
         }
     }
