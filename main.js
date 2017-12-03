@@ -64,7 +64,7 @@ function pad(num, size) {
     return s;
 }
 
-var tick_count = 0;
+var tick_count = 1;
 function animate() {
     if (tick_count++ % 160 == 0) {
       entities.push(new Puncher());

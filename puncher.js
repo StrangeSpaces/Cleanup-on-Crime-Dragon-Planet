@@ -189,7 +189,7 @@ function Puncher() {
         }
     }
 
-    this.pos.x = 250 + 200 * Math.random();
+    this.pos.x = Math.random() * logicalWidth;
     this.pos.y = 50;
 
     this.max_speed = 2;
@@ -269,12 +269,14 @@ Puncher.prototype.think = function() {
     } else {
         if (!this.target) {
             if (this.targetDelay <= 0) {
-                var d = Math.random() * 200 + 60;
+                var d = Math.random() * logicalWidth;
 
-                if (player.pos.x > this.pos.x) {
-                    d = -d;
+                if (player.pos.x > this.pos.x && d > player.pos.x) {
+                    d = player.pos.x - 40;
+                } else if (player.pos.x < this.pos.x && d < player.pos.x) {
+                    d = player.pos.x + 40;
                 }
-                this.target = player.pos.x + d;
+                this.target = Math.min(Math.max(d, this.halfWidth + 1), logicalWidth - this.halfWidth - 1);
             } else {
                 this.targetDelay--;
             }

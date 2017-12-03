@@ -119,7 +119,7 @@ function Police() {
         }
     }
 
-    this.pos.x = 250 + 200 * Math.random();
+    this.pos.x = Math.random() * logicalWidth;
     this.pos.y = 50;
 
     this.max_speed = 2;

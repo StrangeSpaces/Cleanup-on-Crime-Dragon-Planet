@@ -159,6 +159,7 @@ var Tilemap = {
     },
 
     getTile: function(x, y) {
+        if (x < 0 || y < 0 || x >= tileMapWidth || y >= tileMapHeight) return 1;
         return placement[y * tileMapWidth + x];
     }
 }
