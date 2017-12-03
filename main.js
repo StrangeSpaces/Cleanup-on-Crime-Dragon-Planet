@@ -66,7 +66,7 @@ function pad(num, size) {
 
 var tick_count = 1;
 function animate() {
-    if (AMOUNT == 0 || ++tick_count >= 10 * 60) {
+    if (AMOUNT == 0 || (++tick_count >= 10 * 60 && wave+1 < waves[levelNum].count)) {
         if (wave++ < waves[levelNum].count) {
             tick_count = 0;
             for (var i=0; i < waves[levelNum].amount; i++) {
