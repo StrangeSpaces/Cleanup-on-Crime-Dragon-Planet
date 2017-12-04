@@ -313,7 +313,7 @@ Player.prototype.update = function() {
     } else {
         this.lastDisplayedPower = Math.max(this.lastDisplayedPower - 0.008, this.power);
     }
-    power.texture.frame = new PIXI.Rectangle(0, 32, 7 + this.lastDisplayedPower * 40, 32);
+    power.texture.frame = new PIXI.Rectangle(48, 0, 2 + this.lastDisplayedPower * 36, 32);
 };
 
 Player.prototype.updateCamera = function() {

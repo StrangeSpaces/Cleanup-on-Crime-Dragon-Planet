@@ -272,7 +272,7 @@ function init() {
   PIXI.loader.add('tiles', 'imgs/tiles.png')
              .add('jane_boxes', 'imgs/jane_hitbox.png')
              .add('bg', 'imgs/bg.png')
-             .add('ui', 'imgs/ui.png')
+             .add('ui', 'imgs/powerbar.png')
              .add('eneg', 'imgs/eneg.png')
              .add('dragon', 'imgs/dragon.png')
              .add('dragon_boxes', 'imgs/dragon_hitbox.png')
@@ -302,7 +302,7 @@ function init() {
       border = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 0, 48, 32)));
       uiContainer.addChild(border);
 
-      power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
+      power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(48, 0, 48, 32)));
       uiContainer.addChild(power);
 
       CHANCE = 0.3;
