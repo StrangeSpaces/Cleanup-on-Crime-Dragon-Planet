@@ -140,10 +140,12 @@ function Player() {
     this.behavior = new Behavior(this.states, this);
 
     this.haveBeenHit = {};
+
+    this.inv = 0;
 };
 
 Player.prototype.knockBack = function(obj) {
-    if (this.haveBeenHit[obj.id]) {
+    if (this.haveBeenHit[obj.id] || this.inv > 0) {
         return;
     }
     this.haveBeenHit[obj.id] = true;
@@ -187,6 +189,7 @@ Player.prototype.knockBack = function(obj) {
 HIGH_SCORE = 0;
 LOW_SCORE = 0;
 Player.prototype.damage = function(amount) {
+    this.inv = 20;
     this.hp = Math.max(this.hp - amount, 0);
 
     hurt.play();
@@ -292,6 +295,16 @@ Player.prototype.reducePower = function(amount) {
 
 Player.prototype.update = function() {
     Key.update();
+
+    if (this.inv-- > 0) {
+        if (Math.floor(this.inv / 5) % 2 == 0) {
+            this.sprite.alpha = 0;
+        } else {
+            this.sprite.alpha = 1;
+        }
+    } else {
+        this.sprite.alpha = 1;
+    }
 
     this.slide_cool--;
     if (this.knockBackCounter > 0) {
