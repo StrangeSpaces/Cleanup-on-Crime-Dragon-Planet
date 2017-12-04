@@ -54,6 +54,7 @@ Start.prototype.updateGraphics = function() {
 Start.prototype.update = function() {
     if (--this.destroy <= 0) {
         this.dead = true;
+        player.power = 0;
         AMOUNT--;
     } else if (this.destroy <= 60) {
         if (Math.floor(this.destroy / 5) % 2 == 0) {

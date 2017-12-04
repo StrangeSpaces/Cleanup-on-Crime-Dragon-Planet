@@ -3,7 +3,6 @@ function Label(text, pos, notFloating) {
     this.pos = new Vec(pos.x, pos.y);
     this.vel = new Vec(0, notFloating ? 0 : -0.5);
 
-    this.label = [];
     this.hitstun = 0;
     this.age = 0;
 

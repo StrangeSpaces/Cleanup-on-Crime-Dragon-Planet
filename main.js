@@ -252,7 +252,7 @@ function start() {
     }
 
     if (levelNum != 0) {
-        entities.push(new Label("Wave " + (levelNum), new Vec(logicalWidth / 2, logicalHeight / 2 + 24)));
+        entities.push(new Wave(levelNum, new Vec(logicalWidth / 2, logicalHeight / 2 + 24)));
     }
 };
 
@@ -294,6 +294,8 @@ function init() {
              .add('stars', 'imgs/stars.png')
              .add('pickups', 'imgs/pickups.png')
              .add('projectile', 'imgs/projectiles.png')
+             .add('wave', 'imgs/Wave.png')
+             .add('num', 'imgs/Num.png')
              .add('kenpixel', 'imgs/ken.fnt').load(function (loader, res) {
       resources = res;
 
