@@ -40,10 +40,8 @@ function Start() {
             [],
         ]
     ]
-};
-
-Start.prototype.update = function() {
-    this.behavior.update(1);
+    this.start_y = this.pos.y;
+    this.age = 0;
 };
 
 Start.prototype.updateGraphics = function() {
@@ -63,6 +61,8 @@ Start.prototype.update = function() {
             this.sprite.alpha = 1;
         }
     }
+
+    this.pos.y = this.start_y + Math.sin(++this.age/15)*3;
 
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
