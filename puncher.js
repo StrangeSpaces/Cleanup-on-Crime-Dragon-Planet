@@ -189,7 +189,11 @@ function Puncher() {
         }
     }
 
-    this.pos.x = logicalWidth + 100 * Math.random();
+    if (AMOUNT % 2 == 0) {
+        this.pos.x = logicalWidth + 100 * Math.random() + 50;
+    } else {
+        this.pos.x = -100 * Math.random() - 50;
+    }
     this.pos.y = logicalHeight - 16 - this.halfHeight;
 
     this.max_speed = 2;
@@ -368,7 +372,7 @@ Puncher.prototype.damage = function(amount) {
 Puncher.prototype.update = function() {
     if (this.moveThroughWalls == true) {
         this.landed = true
-        if (this.right() < logicalWidth) {
+        if (this.right() < logicalWidth && this.left() > 0) {
             this.moveThroughWalls = false;
         }
     } else {

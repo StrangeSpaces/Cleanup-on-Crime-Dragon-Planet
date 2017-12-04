@@ -189,7 +189,7 @@ Player.prototype.knockBack = function(obj) {
 HIGH_SCORE = 0;
 LOW_SCORE = 0;
 Player.prototype.damage = function(amount) {
-    this.inv = 20;
+    this.inv = 40;
     this.hp = Math.max(this.hp - amount, 0);
 
     hurt.play();
