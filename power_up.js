@@ -4,10 +4,11 @@ PowerUp.prototype.parent = Entity.prototype;
 POWER_UP = 100;
 
 function PowerUp(pos) {
+    Entity.call(this, 'pickups', 32, 32);
+
     this.pos.x = pos.x;
     this.pos.y = pos.y + 8;
 
-    Entity.call(this, 'pickups', 32, 32);
     this.halfWidth = 1;
     this.age = 0;
 
