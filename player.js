@@ -50,6 +50,8 @@ function Player() {
         air_rise: {
             frames: [
                 { duration: 6, frame: 14 },
+                { duration: 6, frame: 15 },
+                { duration: 6, frame: 16 },
             ],
             update: function(self) {
                 if (self.vel.y > 0) {
@@ -64,7 +66,8 @@ function Player() {
         },
         air_fall: {
             frames: [
-                { duration: 6, frame: 15 },
+                { duration: 6, frame: 17 },
+                { duration: 6, frame: 18 },
             ],
             update: function(self) {
                 self.standardInput();
@@ -110,7 +113,8 @@ function Player() {
                 { duration: 3, frame: 43 },
                 { duration: 6, frame: 44 },
                 { duration: 6, frame: 45 },
-                { duration: 6, frame: 5, after: 'idle' },
+                { duration: 6, frame: 46 },
+                { duration: 6, frame: 47, after: 'idle' },
             ],
             enter: function(self) {
                 self.friction = 0;
@@ -142,6 +146,9 @@ function Player() {
     this.haveBeenHit = {};
 
     this.inv = 0;
+
+    HIGH_SCORE = 0;
+    LOW_SCORE = 0;
 };
 
 Player.prototype.knockBack = function(obj) {
@@ -186,8 +193,6 @@ Player.prototype.knockBack = function(obj) {
     SHAKE = knockBack / 0.7 - 1;
 }
 
-HIGH_SCORE = 0;
-LOW_SCORE = 0;
 Player.prototype.damage = function(amount) {
     this.inv = 40;
     this.hp = Math.max(this.hp - amount, 0);
@@ -199,9 +204,6 @@ Player.prototype.damage = function(amount) {
         this.dead = true;
         died.play();
 
-
-        HIGH_SCORE = Math.max(HIGH_SCORE, scoreAmount);
-        LOW_SCORE = Math.min(LOW_SCORE, scoreAmount);
 
         entities.push(new Label('Died On Wave ' + levelNum, new Vec(logicalWidth/2, logicalHeight/2 - 16), true));
         entities.push(new Label('High Score ' + HIGH_SCORE, new Vec(logicalWidth/2, logicalHeight/2), true));
@@ -295,6 +297,9 @@ Player.prototype.reducePower = function(amount) {
 }
 
 Player.prototype.update = function() {
+    HIGH_SCORE = Math.max(HIGH_SCORE, scoreAmount);
+    LOW_SCORE = Math.min(LOW_SCORE, scoreAmount);
+
     Key.update();
 
     if (this.inv-- > 0) {
