@@ -85,8 +85,8 @@ CollisionHandler.addCollision([false, PLAYER, POWER_UP, function(player, power_u
     if (power_up.age <= 10) return;
 
     power_up.dead = true;
-    player.hp = Math.max(player.hp + 50, 100);
-    player.power = Math.max(player.power + 0.5, 1);
+    player.hp = Math.min(player.hp + 50, 100);
+    player.power = Math.min(player.power + 0.5, 1);
 }]);
 
 // CollisionHandler.addCollision([false, PUNCHER, PUNCHER, function(a, b) {

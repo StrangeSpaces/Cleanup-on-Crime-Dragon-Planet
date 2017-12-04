@@ -394,7 +394,7 @@ Puncher.prototype.update = function() {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));
 
-                if (Math.random() < 1) {
+                if (Math.random() < 0.4) {
                     entities.push(new PowerUp(this.pos));
                 }
             }
