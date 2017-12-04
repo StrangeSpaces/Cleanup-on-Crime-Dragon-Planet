@@ -11,12 +11,16 @@ function Wave(num, pos) {
     this.sprite = new PIXI.Sprite(new PIXI.Texture(resources['wave'].texture));
     this.sprite.anchor.x = 0.5;
 
-    this.num = new PIXI.Sprite(new PIXI.Texture(resources['num'].texture, new PIXI.Rectangle(num * 32, 0, 32, 48)));
+    this.num = new PIXI.Sprite(new PIXI.Texture(resources['num'].texture, new PIXI.Rectangle((num < 10 ? num : 1) * 32, 0, 32, 48)));
+    if (num > 10) {
+        this.num2 = new PIXI.Sprite(new PIXI.Texture(resources['num'].texture, new PIXI.Rectangle((num-10) * 32, 0, 32, 48)));
+    }
     // this.num.anchor.x = 0;
 
     this.updateGraphics();
     frontContainer.addChild(this.sprite);
     frontContainer.addChild(this.num);
+    if (this.num2)frontContainer.addChild(this.num2);
 }
 
 Wave.prototype.updateGraphics = function() {
@@ -26,6 +30,12 @@ Wave.prototype.updateGraphics = function() {
     this.num.position.x = this.pos.x + 56;
     this.num.position.y = this.pos.y;
 
+    if (this.num2) {
+        this.num2.position.x = this.pos.x + 74;
+        this.num2.position.y = this.pos.y;
+        this.num2.alpha = 1 - this.age*this.age/(120*120);
+    }
+
     this.sprite.alpha = 1 - this.age*this.age/(120*120);
     this.num.alpha = 1 - this.age*this.age/(120*120);
 }
@@ -34,6 +44,9 @@ Wave.prototype.update = function() {
     if (this.age++ >= 120) {
         this.dead = true;
         this.num.destroy();
+        if (this.num2) {
+            this.num2.destroy();
+        }
         return;
     }
 

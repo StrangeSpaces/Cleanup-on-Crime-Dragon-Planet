@@ -74,6 +74,8 @@ function animate() {
             tick_count = 0;
             if (waves[levelNum].amount == 0) {
                 entities.push(new Start());
+            } else if (waves[levelNum].amount == -1) {
+                entities.push(new Start("I did not think anyone would reach this.\nUhhhhhh... GG?"));
             } else {
                 for (var i=0; i < waves[levelNum].amount; i++) {
                     entities.push(new Puncher());

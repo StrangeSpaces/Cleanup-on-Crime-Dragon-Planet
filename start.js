@@ -1,13 +1,13 @@
 START = 500;
 
-function Start() {
+function Start(text) {
     this.pos = new Vec(logicalWidth / 2, logicalHeight / 2 + 60);
     this.vel = new Vec(0, 0);
 
     this.halfWidth = 1;
     this.age = 0;
 
-    this.type = START;
+    this.type = text || START;
 
     this.states = {
         idle: {
@@ -20,7 +20,7 @@ function Start() {
     this.behavior = new Behavior(this.states, this);
     this.moveThroughWalls = true;
 
-    this.sprite = new PIXI.extras.BitmapText('START', { font: '16px KenPixel Blocks', align: 'center' });
+    this.sprite = new PIXI.extras.BitmapText(text || "START", { font: '16px KenPixel Blocks', align: 'center' });
     this.sprite.anchor.x = 0.5;
     currentContainer.addChild(this.sprite);
 

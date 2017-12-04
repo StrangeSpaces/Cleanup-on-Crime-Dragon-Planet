@@ -9,7 +9,18 @@ var waves = [
     {count: 2, amount: 2},
     {count: 3, amount: 2},
     {count: 2, amount: 3},
-    {count: 4, amount: 3}
+
+    {count: 4, amount: 3},
+    {count: 3, amount: 4},
+    {count: 4, amount: 4},
+    {count: 3, amount: 5},
+    {count: 4, amount: 5},
+
+    {count: 3, amount: 6},
+    {count: 4, amount: 6},
+    {count: 3, amount: 7},
+    {count: 4, amount: 7},
+    {count: 1, amount: -1},
 ]
 
 
@@ -19,7 +30,18 @@ var levelOrder = [
     'CrimeDragonLand',
     'CrimeDragonLand',
     'CrimeDragonLand',
-    'CrimeDragonLand'
+
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
+    'CrimeDragonLand',
 ]
 
 var tiles;
