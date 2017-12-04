@@ -382,6 +382,7 @@ Puncher.prototype.update = function() {
                 scoreAmount -= 300;
                 entities.push(new Label('-300', this.pos));
                 STARS += 0.8
+                STARS = Math.min(5, STARS);
                 if (Math.floor(Math.max(STARS-0.8, 0)) < Math.floor(STARS)) {
                     entities.push(new Car());
                 }
@@ -393,7 +394,7 @@ Puncher.prototype.update = function() {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));
 
-                if (Math.random() < 0.3) {
+                if (Math.random() < 1) {
                     entities.push(new PowerUp(this.pos));
                 }
             }

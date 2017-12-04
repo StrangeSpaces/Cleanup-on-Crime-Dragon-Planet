@@ -66,8 +66,9 @@ function pad(num, size) {
 
 var tick_count = 1;
 STARS = 0;
+STAR_DISPLAY = 0;
 function animate() {
-    STARS = Math.max(STARS - 0.00001, 0);
+    STARS = Math.max(STARS - 0.0003, 0);
     if (AMOUNT == 0 || (++tick_count >= 10 * 60 && wave+1 <= waves[levelNum].count)) {
         if (wave++ < waves[levelNum].count) {
             tick_count = 0;
@@ -121,6 +122,16 @@ function animate() {
         currentContainer.position.y += Math.sin(ang) * SHAKE * scaleFactor;
 
         SHAKE = Math.max(0, SHAKE - 0.2);
+    }
+
+    if (STAR_DISPLAY < STARS) {
+      STAR_DISPLAY = Math.min(STARS, STAR_DISPLAY + 0.025);
+    } else {
+      STAR_DISPLAY = Math.max(STARS, STAR_DISPLAY - 0.025);
+    }
+    for (var i = fillers.length - 1; i >= 0; i--) {
+      var amount = Math.min(Math.max(STAR_DISPLAY - i, 0), 1); 
+      fillers[i].texture.frame = new PIXI.Rectangle(32, 0, 9 + Math.floor(13*amount), 32);
     }
 
     score.text = pad(scoreAmount, 6);
@@ -202,6 +213,7 @@ function start() {
     if (player && player.hp <= 0) {
         levelNum = 0;
         STARS = 0;
+        STAR_DISPLAY = 0;
         scoreAmount = 0;
 
         mainContainer.removeChildren();
@@ -259,6 +271,7 @@ function init() {
              .add('logo', 'imgs/logo.png')
              .add('cb', 'imgs/crab_hitbox.png')
              .add('jane', 'imgs/jane_sheet.png')
+             .add('stars', 'imgs/stars.png')
              .add('pickups', 'imgs/pickups.png')
              .add('projectile', 'imgs/projectiles.png')
              .add('kenpixel', 'imgs/ken.fnt')
@@ -283,6 +296,28 @@ function init() {
       score.position.x = logicalWidth - 55;
       uiContainer.addChild(score);
       mainContainer.addChild(new PIXI.Sprite(new PIXI.Texture(resources['bg'].texture)));
+
+      stars = [
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(0, 0, 32, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(0, 0, 32, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(0, 0, 32, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(0, 0, 32, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(0, 0, 32, 32))),
+      ]
+
+      fillers = [
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(32, 0, 0, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(32, 0, 0, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(32, 0, 0, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(32, 0, 0, 32))),
+        new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(32, 0, 0, 32))),
+      ]
+
+      for (var i = stars.length - 1; i >= 0; i--) {
+        uiContainer.addChild(stars[i]);
+        uiContainer.addChild(fillers[i]);
+        fillers[i].position.x = stars[i].position.x = i * 24 + 100;
+      }
 
       start();
 

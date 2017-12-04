@@ -29,6 +29,23 @@ function PowerUp(pos) {
 PowerUp.prototype.update = function() {
     this.age++;
 
+    if (this.age == 240) {
+        this.dead = true;
+        return
+    } else if (this.age >= 180) {
+        if (Math.floor(this.age / 3) % 2 == 0) {
+            this.sprite.alpha = 0;
+        } else {
+            this.sprite.alpha = 1;
+        }
+    }  else if (this.age >= 120) {
+        if (Math.floor(this.age / 5) % 2 == 0) {
+            this.sprite.alpha = 0;
+        } else {
+            this.sprite.alpha = 1;
+        }
+    }
+
     this.behavior.update(1);
 
     Entity.prototype.update.call(this);
