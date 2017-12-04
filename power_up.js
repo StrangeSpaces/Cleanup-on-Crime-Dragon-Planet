@@ -4,7 +4,7 @@ PowerUp.prototype.parent = Entity.prototype;
 POWER_UP = 100;
 
 function PowerUp(pos) {
-    Entity.call(this, 'tiles', 16, 16);
+    Entity.call(this, 'pickups', 32, 32);
     this.halfWidth = 1;
     this.age = 0;
 
@@ -23,13 +23,13 @@ function PowerUp(pos) {
     this.pos.y = pos.y + 8;
 
     this.behavior = new Behavior(this.states, this);
+    this.frameNumber = Math.floor(Math.random() * 4);
 };
 
 PowerUp.prototype.update = function() {
     this.age++;
 
     this.behavior.update(1);
-    this.frameNumber = this.behavior.frame.frame;
 
     Entity.prototype.update.call(this);
 };
