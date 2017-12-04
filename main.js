@@ -68,7 +68,7 @@ var tick_count = 1;
 STARS = 0;
 STAR_DISPLAY = 0;
 function animate() {
-    STARS = Math.max(STARS - 0.0003, 0);
+    STARS = Math.max(Math.floor(STARS), Math.max(STARS - 0.0003, 0));
     if (AMOUNT == 0 || (++tick_count >= 10 * 60 && wave+1 <= waves[levelNum].count)) {
         if (wave++ < waves[levelNum].count) {
             tick_count = 0;

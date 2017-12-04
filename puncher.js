@@ -385,6 +385,7 @@ Puncher.prototype.update = function() {
                 STARS = Math.min(5, STARS);
                 if (Math.floor(Math.max(STARS-0.8, 0)) < Math.floor(STARS)) {
                     entities.push(new Car());
+                    STARS = Math.floor(STARS) + 0.02;
                 }
 
                 if (Math.random() < 0.05) {
