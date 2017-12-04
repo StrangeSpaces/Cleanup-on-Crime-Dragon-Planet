@@ -253,6 +253,7 @@ function start() {
 
     if (levelNum != 0) {
         entities.push(new Wave(levelNum, new Vec(logicalWidth / 2, logicalHeight / 2 + 24)));
+        waveChange.play();
     }
 };
 
