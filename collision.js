@@ -81,6 +81,15 @@ CollisionHandler.addCollision([true, PLAYER, PROJECTILE, function(player, projec
     projectile.dead = true
 }]);
 
+CollisionHandler.addCollision([true, PLAYER, START, function(player, start, boxes) {
+    if (start.destroy <= 60) return;
+
+    start.destroy = 60;
+
+    start.hitstun = 6;
+    player.hitstun = 6;
+}]);
+
 CollisionHandler.addCollision([false, PLAYER, POWER_UP, function(player, power_up, boxes) {
     if (power_up.age <= 10) return;
 

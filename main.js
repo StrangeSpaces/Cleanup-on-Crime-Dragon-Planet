@@ -72,8 +72,12 @@ function animate() {
     if (AMOUNT == 0 || (++tick_count >= 10 * 60 && wave+1 <= waves[levelNum].count)) {
         if (wave++ < waves[levelNum].count) {
             tick_count = 0;
-            for (var i=0; i < waves[levelNum].amount; i++) {
-                entities.push(new Puncher());
+            if (waves[levelNum].amount == 0) {
+                entities.push(new Start());
+            } else {
+                for (var i=0; i < waves[levelNum].amount; i++) {
+                    entities.push(new Puncher());
+                }
             }
         } else {
             levelNum++;
@@ -234,6 +238,10 @@ function start() {
         entities.length = 0;
         player = new Player();
         entities.push(player);
+    }
+
+    if (levelNum != 0) {
+        entities.push(new Label("Wave " + (levelNum), new Vec(logicalWidth / 2, logicalHeight / 2 + 24)));
     }
 };
 

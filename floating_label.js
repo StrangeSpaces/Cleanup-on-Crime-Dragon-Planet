@@ -1,5 +1,5 @@
 function Label(text, pos) {
-    this.pos = new Vec(pos.x - 6, pos.y);
+    this.pos = new Vec(pos.x, pos.y);
     this.vel = new Vec(0, -0.5);
 
     this.label = [];
@@ -11,6 +11,7 @@ function Label(text, pos) {
     this.text = text;
     this.type = null;
     this.sprite = new PIXI.extras.BitmapText(text, { font: '16px KenPixel Mini', align: 'center' });
+    this.sprite.anchor.x = 0.5;
     this.updateGraphics();
     frontContainer.addChild(this.sprite);
 }
@@ -19,7 +20,7 @@ Label.prototype.updateGraphics = function() {
     this.sprite.position.x = this.pos.x;
     this.sprite.position.y = this.pos.y;
 
-    this.sprite.alpha = 1 - this.age/120;
+    this.sprite.alpha = 1 - this.age*this.age/(120*120);
 }
 
 Label.prototype.update = function() {

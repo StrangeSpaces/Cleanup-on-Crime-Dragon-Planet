@@ -27,6 +27,8 @@ function PowerUp(pos) {
 
     this.behavior = new Behavior(this.states, this);
     this.frameNumber = Math.floor(Math.random() * 4);
+    this.start = this.pos.y;
+    this.moveThroughWalls = true;
 };
 
 PowerUp.prototype.update = function() {
@@ -48,6 +50,8 @@ PowerUp.prototype.update = function() {
             this.sprite.alpha = 1;
         }
     }
+
+    this.pos.y = this.start + Math.sin(this.age/15) * 3; 
 
     this.behavior.update(1);
 
