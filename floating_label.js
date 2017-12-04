@@ -11,6 +11,7 @@ function Label(text, pos) {
     this.text = text;
     this.type = null;
     this.sprite = new PIXI.extras.BitmapText(text, { font: '16px KenPixel Mini', align: 'center' });
+    this.updateGraphics();
     frontContainer.addChild(this.sprite);
 }
 

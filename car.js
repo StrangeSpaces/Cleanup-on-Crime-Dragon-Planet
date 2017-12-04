@@ -32,6 +32,8 @@ function Car() {
     this.star = Math.floor(STARS);
     this.spawn = this.star;
     AMOUNT += this.star;
+
+    this.updateGraphics();
 };
 
 Car.prototype.update = function() {

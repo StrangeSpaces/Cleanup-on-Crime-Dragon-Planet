@@ -95,6 +95,7 @@ function Police() {
                     proj.vel.y = -3.5;
 
                     proj.dir = -self.dir;
+                    proj.updateGraphics();
 
                     entities.push(proj);
                 } },

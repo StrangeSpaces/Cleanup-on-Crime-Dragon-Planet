@@ -4,9 +4,14 @@ PowerUp.prototype.parent = Entity.prototype;
 POWER_UP = 100;
 
 function PowerUp(pos) {
+    this.pos.x = pos.x;
+    this.pos.y = pos.y + 8;
+
     Entity.call(this, 'pickups', 32, 32);
     this.halfWidth = 1;
     this.age = 0;
+
+    this.updateGraphics();
 
     this.type = POWER_UP;
     this.dir = RIGHT;
@@ -18,9 +23,6 @@ function PowerUp(pos) {
             ],
         },
     }
-
-    this.pos.x = pos.x;
-    this.pos.y = pos.y + 8;
 
     this.behavior = new Behavior(this.states, this);
     this.frameNumber = Math.floor(Math.random() * 4);
