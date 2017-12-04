@@ -80,7 +80,7 @@ function animate() {
                 }
             }
         } else {
-            if (levelNum != 0) entities.push(new PowerUp(new Vec(logicalWidth/2, logicalHeight/2 + 60)));
+            // if (levelNum != 0) entities.push(new PowerUp(new Vec(logicalWidth/2, logicalHeight/2 + 60)));
             levelNum++;
             start();
         }
