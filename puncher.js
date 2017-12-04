@@ -381,11 +381,12 @@ Puncher.prototype.update = function() {
             if (this.hp <= 0) {
                 scoreAmount -= 300;
                 entities.push(new Label('-300', this.pos));
+                var old = Math.floor(STARS);
                 STARS += 0.8
                 STARS = Math.min(5, STARS);
-                if (Math.floor(Math.max(STARS-0.8, 0)) < Math.floor(STARS)) {
+                if (old < Math.floor(STARS)) {
                     entities.push(new Car());
-                    STARS = Math.floor(STARS) + 0.02;
+                    STARS = Math.floor(STARS);
                 }
 
                 if (Math.random() < 0.05) {
