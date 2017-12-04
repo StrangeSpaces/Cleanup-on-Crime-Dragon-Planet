@@ -68,6 +68,26 @@
       volume: vol,
     });
 
+    var died = new Howl({
+      src: ['sounds/died.wav'],
+      volume: vol,
+    });
+
+    var enemyDied = new Howl({
+      src: ['sounds/enemyDie.wav'],
+      volume: vol * 0.8,
+    });
+
+    var siren = new Howl({
+      src: ['sounds/siren.wav'],
+      volume: vol
+    });
+
+    var swing = new Howl({
+      src: ['sounds/enemySwing.wav'],
+      volume: vol
+    })
+
     var impacts = [
         new Howl({
           src: ['sounds/impact01.wav'],

@@ -37,6 +37,13 @@ function Car() {
 };
 
 Car.prototype.update = function() {
+    if (this.pos.x < logicalWidth) {
+        if (!this.played) {
+            siren.play();
+            this.played = true;
+        }
+    }
+
     this.behavior.update(1);
     this.frameNumber = this.behavior.frame.frame;
 

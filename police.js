@@ -78,7 +78,7 @@ function Police() {
         stab: {
             frames: [
                 { duration: 6, frame: 12 },
-                { duration: 6, frame: 13 },
+                { duration: 6, frame: 13, action: function(self) { swing.play() } },
                 { duration: 6, frame: 14, after: 'idle' },
             ],
             moveable: false
@@ -233,6 +233,7 @@ Police.prototype.damage = function(amount) {
     this.hp = Math.max(this.hp - amount, 0);
 
     if (this.hp == 0) {
+        enemyDied.play();
         this.behavior.changeState('dead');
         this.destroy_timer = 30;
         this.icon_sprite.position.y = this.sprite.position.y;

@@ -167,7 +167,7 @@ function Puncher() {
         stab: {
             frames: [
                 { duration: 6, frame: 8 },
-                { duration: 6, frame: 9 },
+                { duration: 6, frame: 9, action: function(self) { swing.play() } },
                 { duration: 6, frame: 10 },
                 { duration: 6, frame: 11, after: 'flee' },
             ],
@@ -353,6 +353,7 @@ Puncher.prototype.damage = function(amount) {
 
     loseFocus(this.focus, this);
     if (this.hp == 0) {
+        enemyDied.play();
         this.behavior.changeState('dead');
         this.destroy_timer = 30;
         this.icon_sprite.position.y = this.sprite.position.y;

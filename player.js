@@ -197,6 +197,7 @@ Player.prototype.damage = function(amount) {
     if (this.hp <= 0) {
         // start();
         this.dead = true;
+        died.play();
 
 
         HIGH_SCORE = Math.max(HIGH_SCORE, scoreAmount);
