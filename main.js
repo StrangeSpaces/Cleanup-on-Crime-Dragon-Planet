@@ -1,5 +1,5 @@
 var logicalWidth = 336;
-var logicalHeight = 176;
+var logicalHeight = 208;
 
 var renderer = null;
 var stage = null;
@@ -226,7 +226,7 @@ function init() {
   renderer = PIXI.autoDetectRenderer(logicalWidth, logicalHeight, {
     roundPixels: true,
     resolution: window.devicePixelRatio || 1,
-    backgroundColor: 0x35211a,
+    backgroundColor: 0x240106,
   });
   renderer.view.id = 'pixi-canvas';
   
