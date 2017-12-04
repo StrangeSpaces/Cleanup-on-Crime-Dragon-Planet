@@ -87,11 +87,19 @@ function Entity(file, width, height) {
     }
 }
 
-Entity.prototype.createHP = function() {
-    this.hp_sprite = new PIXI.Sprite(new PIXI.Texture(resources['tiles'].texture, new PIXI.Rectangle(0, 0, 16, 4)));
+Entity.prototype.createHP = function(cop) {
+    this.border_sprite = new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(64, 0, 32, 32)));
+    this.hp_sprite = new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(96, 0, 32, 32)));
+    if (cop) {
+        this.cop_hp = new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(128, 0, 32, 32)));
+    }
     this.hp = 100;
     this.lastDisplayedHp = 100;
+    currentContainer.addChild(this.border_sprite);
     currentContainer.addChild(this.hp_sprite);
+    if (cop) {
+        currentContainer.addChild(this.cop_hp);
+    }
 
     this.icon_sprite = new PIXI.Sprite(new PIXI.Texture(resources['icons'].texture, new PIXI.Rectangle(0, 0, 0, 32)));
     currentContainer.addChild(this.icon_sprite);
@@ -250,18 +258,26 @@ Entity.prototype.updateGraphics = function() {
     this.sprite.position.y = this.pos.y + this.offset.y;
 
     if (this.hp_sprite) {
-        this.hp_sprite.position.x = this.sprite.position.x - 8;
-        this.hp_sprite.position.y = this.sprite.position.y - 16;
-
-        this.icon_sprite.position.x = this.sprite.position.x - 16;
-        this.icon_sprite.position.y = this.sprite.position.y - 40;
+        this.border_sprite.position.x = this.sprite.position.x - 16;
+        this.border_sprite.position.y = this.sprite.position.y - 32;
+        this.hp_sprite.position.x = this.sprite.position.x - 14;
+        this.hp_sprite.position.y = this.sprite.position.y - 32;
 
         if (this.lastDisplayedHp < this.hp) {
             this.lastDisplayedHp = Math.min(this.lastDisplayedHp + 2, this.hp);
         } else {
             this.lastDisplayedHp = Math.max(this.lastDisplayedHp - 2, this.hp);
         }
-        this.hp_sprite.texture.frame = new PIXI.Rectangle(0, 0, Math.ceil(this.lastDisplayedHp * 16/100), 4);
+        this.hp_sprite.texture.frame = new PIXI.Rectangle(98, 0, Math.ceil(this.lastDisplayedHp * 28/100), 32);
+
+        if (this.cop_hp) {
+            this.cop_hp.position.x = this.hp_sprite.position.x;
+            this.cop_hp.position.y = this.hp_sprite.position.y;
+            this.cop_hp.texture.frame = new PIXI.Rectangle(130, 0, Math.min(Math.ceil(this.lastDisplayedHp * 28/100), 6), 19, 32);
+        }
+
+        this.icon_sprite.position.x = this.sprite.position.x - 16;
+        this.icon_sprite.position.y = this.sprite.position.y - 40;
     }
 
     this.frame.x = (this.frameNumber % this.framesPerRow) * this.frame.width;

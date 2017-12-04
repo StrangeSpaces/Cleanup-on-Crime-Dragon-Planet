@@ -99,7 +99,9 @@ function animate() {
             obj.sprite.destroy();
             if (obj.hp_sprite) {
               obj.hp_sprite.destroy();
+              obj.border_sprite.destroy();
               obj.icon_sprite.destroy();
+              if (obj.cop_hp) obj.cop_hp.destroy();
             }
         }
         return !obj.dead;
@@ -225,8 +227,9 @@ function start() {
     loadLevel();
 
     if (player && player.hp > 0) {
-        mainContainer.addChild(player.sprite);
-        mainContainer.addChild(player.hp_sprite);
+        // mainContainer.addChild(player.sprite);
+        // mainContainer.addChild(player.hp_sprite);
+        // mainContainer.addChild(player.border_sprite);
     } else {
         entities.length = 0;
         player = new Player();

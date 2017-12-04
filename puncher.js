@@ -57,7 +57,7 @@ function updateFocus() {
 
 function Puncher() {
     Entity.call(this, 'dragon', 64, 48);
-    this.createHP();
+    this.createHP(true);
 
     this.load_hitboxes('dragon_boxes');
     this.halfWidth = 16;
