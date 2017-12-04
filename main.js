@@ -151,6 +151,15 @@ function animate() {
     currentContainer.position.x = oldX;
     currentContainer.position.y = oldY;
 
+    if (player.hp <= 0) {
+      Key.update();
+    }
+
+    if (Key.pressed(Key.R)) {
+      player.hp = 0;
+      start();
+    }
+
     // start the timer for the next animation loop
     requestAnimationFrame(animate);
 };
@@ -273,7 +282,6 @@ function init() {
              .add('jane_boxes', 'imgs/jane_hitbox.png')
              .add('bg', 'imgs/bg.png')
              .add('ui', 'imgs/powerbar.png')
-             .add('eneg', 'imgs/eneg.png')
              .add('dragon', 'imgs/dragon.png')
              .add('dragon_boxes', 'imgs/dragon_hitbox.png')
              .add('police', 'imgs/police.png')
@@ -282,13 +290,11 @@ function init() {
              .add('icons', 'imgs/icons.png')
              .add('particles', 'imgs/particles.png')
              .add('logo', 'imgs/logo.png')
-             .add('cb', 'imgs/crab_hitbox.png')
              .add('jane', 'imgs/jane_sheet.png')
              .add('stars', 'imgs/stars.png')
              .add('pickups', 'imgs/pickups.png')
              .add('projectile', 'imgs/projectiles.png')
-             .add('kenpixel', 'imgs/ken.fnt')
-             .add('ealpha', 'imgs/ealpha.png').load(function (loader, res) {
+             .add('kenpixel', 'imgs/ken.fnt').load(function (loader, res) {
       resources = res;
 
       window.focus();

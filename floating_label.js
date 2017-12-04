@@ -1,6 +1,7 @@
-function Label(text, pos) {
+function Label(text, pos, notFloating) {
+    this.floating = !notFloating
     this.pos = new Vec(pos.x, pos.y);
-    this.vel = new Vec(0, -0.5);
+    this.vel = new Vec(0, notFloating ? 0 : -0.5);
 
     this.label = [];
     this.hitstun = 0;
@@ -20,11 +21,11 @@ Label.prototype.updateGraphics = function() {
     this.sprite.position.x = this.pos.x;
     this.sprite.position.y = this.pos.y;
 
-    this.sprite.alpha = 1 - this.age*this.age/(120*120);
+    if (this.floating) this.sprite.alpha = 1 - this.age*this.age/(120*120);
 }
 
 Label.prototype.update = function() {
-    if (this.age++ == 120) {
+    if (this.age++ >= 120 && this.floating) {
         this.dead = true;
         return;
     }

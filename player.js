@@ -182,13 +182,25 @@ Player.prototype.knockBack = function(obj) {
     SHAKE = knockBack / 0.7 - 1;
 }
 
+HIGH_SCORE = 0;
+LOW_SCORE = 0;
 Player.prototype.damage = function(amount) {
     this.hp = Math.max(this.hp - amount, 0);
 
     hurt.play();
 
     if (this.hp <= 0) {
-        start();
+        // start();
+        this.dead = true;
+
+
+        HIGH_SCORE = Math.max(HIGH_SCORE, scoreAmount);
+        LOW_SCORE = Math.min(LOW_SCORE, scoreAmount);
+
+        entities.push(new Label('Died On Wave ' + levelNum, new Vec(logicalWidth/2, logicalHeight/2 - 16), true));
+        entities.push(new Label('High Score ' + HIGH_SCORE, new Vec(logicalWidth/2, logicalHeight/2), true));
+        entities.push(new Label('Low Score ' + LOW_SCORE, new Vec(logicalWidth/2, logicalHeight/2 + 16), true));
+        entities.push(new Label('R to Restart', new Vec(logicalWidth/2, logicalHeight - 16), true));
     }
 }
 
