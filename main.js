@@ -222,6 +222,7 @@ function start() {
         STARS = 0;
         STAR_DISPLAY = 0;
         scoreAmount = 0;
+        CHANCE = 0.3;
 
         mainContainer.removeChildren();
         frontContainer.removeChildren();
@@ -303,6 +304,8 @@ function init() {
 
       power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
       uiContainer.addChild(power);
+
+      CHANCE = 0.3;
 
       score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Mini', align: 'right' });
       score.position.x = logicalWidth - 55;

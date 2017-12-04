@@ -395,8 +395,11 @@ Puncher.prototype.update = function() {
                 entities.push(new Label('150', this.pos));
                 arrested.play();
 
-                if (Math.random() < 0.4) {
+                if (Math.random() < CHANCE) {
                     entities.push(new PowerUp(this.pos));
+                    CHANCE -= 0.3;
+                } else {
+                    CHANCE += 0.05;
                 }
             }
             AMOUNT--;
