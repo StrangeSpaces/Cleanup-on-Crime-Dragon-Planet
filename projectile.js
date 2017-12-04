@@ -18,6 +18,7 @@ function Projectile() {
         idle: {
             frames: [
                 { duration: 6, frame: 0 },
+                { duration: 6, frame: 1 },
             ],
         },
     }
@@ -26,7 +27,19 @@ function Projectile() {
         [
             [],
             [new Box(this, 0, 0, 8, 8)],
-        ]
+        ],
+        [
+            [],
+            [new Box(this, 0, 0, 8, 8)],
+        ],
+        [
+            [],
+            [new Box(this, 0, 0, 8, 8)],
+        ],
+        [
+            [],
+            [new Box(this, 0, 0, 8, 8)],
+        ],
     ]
 
     this.behavior = new Behavior(this.states, this);
@@ -50,7 +63,7 @@ Projectile.prototype.update = function() {
     this.vel.y += 0.1;
 
     this.behavior.update(1);
-    this.frameNumber = this.behavior.frame.frame;
+    this.frameNumber = this.behavior.frame.frame + (this.vel.y > 0 ? 0 : 2);
     this.sprite.scale.x = this.dir;
 
     Entity.prototype.update.call(this);
