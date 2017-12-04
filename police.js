@@ -243,6 +243,11 @@ Police.prototype.update = function() {
     if (this.destroy_timer > 0) {
         if (--this.destroy_timer <= 0) {
             this.dead = true;
+
+            if (Math.random() < 0.05) {
+                entities.push(new PowerUp(this.pos));
+            }
+
             AMOUNT--;
             return;
         }

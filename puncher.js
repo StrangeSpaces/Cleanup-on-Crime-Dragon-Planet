@@ -385,9 +385,17 @@ Puncher.prototype.update = function() {
                 if (Math.floor(Math.max(STARS-0.8, 0)) < Math.floor(STARS)) {
                     entities.push(new Car());
                 }
+
+                if (Math.random() < 0.05) {
+                    entities.push(new PowerUp(this.pos));
+                }
             } else {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));
+
+                if (Math.random() < 0.3) {
+                    entities.push(new PowerUp(this.pos));
+                }
             }
             AMOUNT--;
 

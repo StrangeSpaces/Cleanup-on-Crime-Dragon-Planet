@@ -162,16 +162,6 @@ function loadLevel() {
     //     }
     //     entities.push(player);
 
-        border = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 0, 48, 32)));
-        uiContainer.addChild(border);
-
-        power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
-        uiContainer.addChild(power);
-
-        score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Mini', align: 'right' });
-        score.position.x = logicalWidth - 55;
-        uiContainer.addChild(score);
-
     //     heart = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 64, 48, 32)));
     //     uiContainer.addChild(heart);
     // }
@@ -205,21 +195,19 @@ function start() {
     AMOUNT = 0;
     tick_count = 1;
 
-    mainContainer.removeChildren();
-    frontContainer.removeChildren();
-    uiContainer.removeChildren();
-
-    mainContainer.addChild(new PIXI.Sprite(new PIXI.Texture(resources['bg'].texture)));
-
     // mainContainer.alpha = 0;
     // frontContainer.alpha = 0;
     // uiContainer.alpha = 0;
-    entities.length = 0;
 
     if (player && player.hp <= 0) {
         levelNum = 0;
         STARS = 0;
         scoreAmount = 0;
+
+        mainContainer.removeChildren();
+        frontContainer.removeChildren();
+
+        mainContainer.addChild(new PIXI.Sprite(new PIXI.Texture(resources['bg'].texture)));
     }
 
     loadLevel();
@@ -228,9 +216,10 @@ function start() {
         mainContainer.addChild(player.sprite);
         mainContainer.addChild(player.hp_sprite);
     } else {
+        entities.length = 0;
         player = new Player();
+        entities.push(player);
     }
-    entities.push(player);
 };
 
 function init() {
@@ -283,6 +272,17 @@ function init() {
       });
 
       scoreAmount = 0;
+      border = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 0, 48, 32)));
+      uiContainer.addChild(border);
+
+      power = new PIXI.Sprite(new PIXI.Texture(resources['ui'].texture, new PIXI.Rectangle(0, 32, 48, 32)));
+      uiContainer.addChild(power);
+
+      score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Mini', align: 'right' });
+      score.position.x = logicalWidth - 55;
+      uiContainer.addChild(score);
+      mainContainer.addChild(new PIXI.Sprite(new PIXI.Texture(resources['bg'].texture)));
+
       start();
 
       // kick off the animation loop (defined below)

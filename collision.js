@@ -81,6 +81,14 @@ CollisionHandler.addCollision([true, PLAYER, PROJECTILE, function(player, projec
     projectile.dead = true
 }]);
 
+CollisionHandler.addCollision([false, PLAYER, POWER_UP, function(player, power_up, boxes) {
+    if (power_up.age <= 10) return;
+
+    power_up.dead = true;
+    player.hp = Math.max(player.hp + 50, 100);
+    player.power = Math.max(player.power + 0.5, 1);
+}]);
+
 // CollisionHandler.addCollision([false, PUNCHER, PUNCHER, function(a, b) {
 //     // var as = a.behavior.state;
 //     // var bs = b.behavior.state;

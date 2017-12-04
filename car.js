@@ -46,6 +46,10 @@ Car.prototype.update = function() {
             this.spawn--;
     }
 
+    if (this.pos.x < -50) {
+        this.dead = true;
+    }
+
     Entity.prototype.update.call(this);
 };
 
