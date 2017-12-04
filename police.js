@@ -88,7 +88,7 @@ function Police() {
                 { duration: 6, frame: 16 },
                 { duration: 6, frame: 17, action: function(self) {
                     var proj = new Projectile();
-                    proj.pos.x = self.pos.x;
+                    proj.pos.x = self.pos.x - self.dir * 4;
                     proj.pos.y = self.pos.y + 8;
 
                     proj.vel.x = self.dir * -1.5;
