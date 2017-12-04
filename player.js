@@ -185,6 +185,8 @@ Player.prototype.knockBack = function(obj) {
 Player.prototype.damage = function(amount) {
     this.hp = Math.max(this.hp - amount, 0);
 
+    hurt.play();
+
     if (this.hp <= 0) {
         start();
     }
@@ -249,7 +251,7 @@ Player.prototype.standardInput = function() {
                         this.behavior.changeState('slide');
                         this.reducePower(0.22);
                         this.haveBeenHit = {};
-                        uppercut.play();
+                        slide.play();
                     }
                 } else {
                     this.behavior.changeState('punch');

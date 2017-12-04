@@ -393,6 +393,7 @@ Puncher.prototype.update = function() {
             } else {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));
+                arrested.play();
 
                 if (Math.random() < 0.4) {
                     entities.push(new PowerUp(this.pos));

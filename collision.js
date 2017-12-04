@@ -96,6 +96,7 @@ CollisionHandler.addCollision([false, PLAYER, POWER_UP, function(player, power_u
     power_up.dead = true;
     player.hp = Math.min(player.hp + 50, 100);
     player.power = Math.min(player.power + 0.5, 1);
+    iceCream.play();
 }]);
 
 // CollisionHandler.addCollision([false, PUNCHER, PUNCHER, function(a, b) {
