@@ -89,7 +89,14 @@
           volume: vol,
         }),
     ]
-    // theme.play();
+
+    var theme = new Howl({
+        src: ['sounds/crime.ogg'],
+        volume: vol * 0.55,
+        loop: true,
+    })
+
+    theme.play();
 </script>
 
 <script src="behavior.js"></script>
