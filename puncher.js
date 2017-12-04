@@ -389,17 +389,20 @@ Puncher.prototype.update = function() {
                     STARS = Math.floor(STARS);
                 }
 
-                if (Math.random() < 0.05) {
+                if (Math.random() < CHANCE/5 + (0.2 - player.hp/500)) {
                     entities.push(new PowerUp(this.pos));
+                    CHANCE -= 0.35;
+                } else {
+                    CHANCE += 0.05;
                 }
             } else {
                 scoreAmount += 150;
                 entities.push(new Label('150', this.pos));
                 arrested.play();
 
-                if (Math.random() < CHANCE) {
+                if (Math.random() < CHANCE + (0.2 - player.hp/500)) {
                     entities.push(new PowerUp(this.pos));
-                    CHANCE -= 0.3;
+                    CHANCE -= 0.35;
                 } else {
                     CHANCE += 0.05;
                 }

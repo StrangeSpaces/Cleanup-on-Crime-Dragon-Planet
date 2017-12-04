@@ -86,8 +86,7 @@ CollisionHandler.addCollision([true, PLAYER, START, function(player, start, boxe
 
     start.destroy = 60;
 
-    start.hitstun = 6;
-    player.hitstun = 6;
+    impacts[5].play();
 }]);
 
 CollisionHandler.addCollision([false, PLAYER, POWER_UP, function(player, power_up, boxes) {

@@ -245,8 +245,11 @@ Police.prototype.update = function() {
         if (--this.destroy_timer <= 0) {
             this.dead = true;
 
-            if (Math.random() < 0.05) {
+            if (Math.random() < CHANCE/5 + (0.2 - player.hp/500)) {
                 entities.push(new PowerUp(this.pos));
+                CHANCE -= 0.35;
+            } else {
+                CHANCE += 0.05;
             }
 
             AMOUNT--;
