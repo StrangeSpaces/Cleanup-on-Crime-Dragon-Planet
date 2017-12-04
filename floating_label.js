@@ -10,7 +10,7 @@ function Label(text, pos, notFloating) {
 
     this.text = text;
     this.type = null;
-    this.sprite = new PIXI.extras.BitmapText(text, { font: '16px KenPixel Mini', align: 'center' });
+    this.sprite = new PIXI.extras.BitmapText(text, { font: '16px KenPixel Blocks', align: 'center' });
     this.sprite.anchor.x = 0.5;
     this.updateGraphics();
     frontContainer.addChild(this.sprite);

@@ -168,13 +168,15 @@ Player.prototype.knockBack = function(obj) {
     }
     if (knockBack == 0) return;
 
+    entities.push(new Hit(obj.pos));
+
     impacts[5 - Math.min(Math.floor(this.power / 0.16), 5)].play();
 
     obj.hitstun = Math.floor(1 + knockBack);
     this.hitstun = Math.floor(1 + knockBack);
     obj.behavior.changeState('knock_back');
     obj.knockBackCounter = knockBack * 6;
-    obj.damage(knockBack * 11)
+    obj.damage(knockBack * 11);
 
     obj.vel.x = 0;
     obj.vel.y = 0;
@@ -243,6 +245,7 @@ Player.prototype.standardInput = function() {
             this.behavior.changeState('air_rise');
             this.vel.y = -5;
 
+            entities.push(new Smoke(new Vec(this.pos.x - 6 * this.dir, this.pos.y + 16)));
             if (this.landed) {
                 jump.play();
             } else {

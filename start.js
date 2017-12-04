@@ -20,7 +20,7 @@ function Start() {
     this.behavior = new Behavior(this.states, this);
     this.moveThroughWalls = true;
 
-    this.sprite = new PIXI.extras.BitmapText('START', { font: '16px KenPixel Mini', align: 'center' });
+    this.sprite = new PIXI.extras.BitmapText('START', { font: '16px KenPixel Blocks', align: 'center' });
     this.sprite.anchor.x = 0.5;
     currentContainer.addChild(this.sprite);
 

@@ -315,7 +315,7 @@ function init() {
 
       CHANCE = 0.3;
 
-      score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Mini', align: 'right' });
+      score = new PIXI.extras.BitmapText('000000', { font: '16px KenPixel Blocks', align: 'right' });
       score.position.x = logicalWidth - 55;
       uiContainer.addChild(score);
       mainContainer.addChild(new PIXI.Sprite(new PIXI.Texture(resources['bg'].texture)));
