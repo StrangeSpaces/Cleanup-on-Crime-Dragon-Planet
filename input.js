@@ -7,7 +7,7 @@ var Key = {
   RIGHT: [68, 39],
   DOWN: [83, 40],
   R: [82, 82],
-  P: [80, 80],
+  P: [80, 88],
 
   update: function() {
     for (var key in this._pressed) {
