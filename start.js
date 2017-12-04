@@ -62,7 +62,7 @@ Start.prototype.update = function() {
         }
     }
 
-    this.pos.y = this.start_y + Math.sin(++this.age/15)*3;
+    this.pos.y = this.start_y + Math.sin(++this.age/20)*2;
 
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
