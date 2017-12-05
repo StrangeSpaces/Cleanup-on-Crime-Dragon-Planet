@@ -115,7 +115,7 @@ function BombDragon() {
             frames: [
                 { duration: 6, frame: 4 },
                 { duration: 6, frame: 5 },
-                { duration: 6, frame: 6, action: function(self) { self.vel.y = -1.15 } },
+                { duration: 6, frame: 6, action: function(self) { self.vel.y = -1.15; } },
                 { duration: 6, frame: 7 },
             ],
             update: function(self) {
@@ -307,7 +307,7 @@ BombDragon.prototype.update = function() {
     if (this.destroy_timer > 0) {
         if (--this.destroy_timer <= 0) {
             this.dead = true;
-            
+
             if (this.hp <= 0) {
                 scoreAmount -= 300;
                 entities.push(new Label('-300', this.pos));
