@@ -130,7 +130,7 @@ function Player() {
     }
 
     this.pos.x = 10;
-    this.lastY = this.pos.y = 50;
+    this.lastY = this.pos.y = logicalHeight - this.halfHeight - 16;
 
     this.max_speed = 2;
     this.friction = 0.05;
