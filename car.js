@@ -52,6 +52,7 @@ Car.prototype.update = function() {
             pol.pos.y = this.pos.y;
             pol.pos.x = this.pos.x;
             entities.push(pol);
+            pol.updateGraphics();
             this.spawn--;
     }
 
