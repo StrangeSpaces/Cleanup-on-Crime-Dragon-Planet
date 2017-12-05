@@ -152,7 +152,7 @@ function Player() {
 };
 
 Player.prototype.knockBack = function(obj) {
-    if (this.haveBeenHit[obj.id] || this.inv > 0) {
+    if (this.haveBeenHit[obj.id]) {
         return;
     }
     this.haveBeenHit[obj.id] = true;

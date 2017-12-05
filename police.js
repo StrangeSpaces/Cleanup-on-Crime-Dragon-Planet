@@ -198,7 +198,7 @@ Police.prototype.think = function() {
 }
 
 Police.prototype.knockBack = function(obj) {
-    if (this.haveBeenHit[obj]) {
+    if (this.haveBeenHit[obj] || obj.inv > 0) {
         return;
     }
     this.haveBeenHit[obj] = true;
