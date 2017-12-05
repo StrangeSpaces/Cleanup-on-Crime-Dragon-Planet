@@ -67,6 +67,7 @@ function pad(num, size) {
 var tick_count = 1;
 STARS = 0;
 STAR_DISPLAY = 0;
+BOMB_COUNT = 0;
 function animate() {
     STARS = Math.max(Math.floor(STARS), Math.max(STARS - 0.0003, 0));
     if (AMOUNT == 0 || (++tick_count >= 10 * 60 && wave+1 <= waves[levelNum].count)) {
@@ -79,11 +80,15 @@ function animate() {
             } else {
                 for (var i=0; i < waves[levelNum].amount; i++) {
                     entities.push(new Puncher());
+                    if (++BOMB_COUNT % 4 == 0) {
+                        entities.push(new BombDragon());
+                    }
                 }
             }
         } else {
             // if (levelNum != 0) entities.push(new PowerUp(new Vec(logicalWidth/2, logicalHeight/2 + 60)));
             levelNum++;
+            BOMB_COUNT = 0;
             start();
         }
     }
@@ -294,9 +299,15 @@ function init() {
              .add('particles', 'imgs/particles.png')
              .add('logo', 'imgs/logo.png')
              .add('jane', 'imgs/jane_sheet.png')
+             .add('exp', 'imgs/expSheet.png')
+             .add('expbox', 'imgs/expbox.png')
              .add('stars', 'imgs/stars.png')
              .add('pickups', 'imgs/pickups.png')
              .add('projectile', 'imgs/projectiles.png')
+             .add('bomb', 'imgs/bomb.png')
+             .add('bombbox', 'imgs/bombbox.png')
+             .add('bdrag', 'imgs/bdrag.png')
+             .add('bdrag_hitbox', 'imgs/bdrag_hitbox.png')
              .add('wave', 'imgs/Wave.png')
              .add('num', 'imgs/Num.png')
              .add('kenpixel', 'imgs/ken.fnt').load(function (loader, res) {

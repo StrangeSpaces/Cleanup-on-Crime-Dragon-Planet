@@ -183,9 +183,11 @@ Player.prototype.knockBack = function(obj) {
 
     obj.hitstun = Math.floor(1 + knockBack);
     this.hitstun = Math.floor(1 + knockBack);
-    obj.behavior.changeState('knock_back');
-    obj.knockBackCounter = knockBack * 6;
-    obj.damage(knockBack * 11);
+    if (obj.type != BOMB) {
+        obj.behavior.changeState('knock_back');
+        obj.knockBackCounter = knockBack * 6;
+        obj.damage(knockBack * 11);
+    }
 
     obj.vel.x = 0;
     obj.vel.y = 0;

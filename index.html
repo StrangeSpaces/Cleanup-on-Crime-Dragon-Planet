@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui" />
-    <title>LD40</title>
+    <title>Cleanup on Crime Dragon Planet/</title>
 
     <style type="text/css">
         body {
@@ -63,6 +63,11 @@
       volume: vol * 0.6,
     });
 
+    var fireball = new Howl({
+      src: ['sounds/fireball.wav'],
+      volume: vol,
+    });
+
     var waveChange = new Howl({
       src: ['sounds/waveChange.wav'],
       volume: vol,
@@ -75,7 +80,7 @@
 
     var enemyDied = new Howl({
       src: ['sounds/enemyDie.wav'],
-      volume: vol * 0.8,
+      volume: vol * 0.7,
     });
 
     var siren = new Howl({
@@ -136,6 +141,21 @@
       volume: vol,
     });
 
+    var bombFall = new Howl({
+      src: ['sounds/bombFall.wav'],
+      volume: vol,
+    });
+
+    var bombExplode = new Howl({
+      src: ['sounds/bombExplode.wav'],
+      volume: vol,
+    });
+
+    var bombLand = new Howl({
+      src: ['sounds/bombLand.wav'],
+      volume: vol,
+    });
+
     var arrested = new Howl({
       src: ['sounds/enemyArrested.wav'],
       volume: vol,
@@ -156,6 +176,7 @@
 <script src="box.js"></script>
 <script src="projectile.js"></script>
 <script src="puncher.js"></script>
+<script src="bdrag.js"></script>
 <script src="police.js"></script>
 <script src="car.js"></script>
 <script src="tilemap.js"></script>

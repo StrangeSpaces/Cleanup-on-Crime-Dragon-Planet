@@ -98,6 +98,8 @@ function Police() {
                     proj.updateGraphics();
 
                     entities.push(proj);
+
+                    fireball.play();
                 } },
                 { duration: 6, frame: 18 },
                 { duration: 6, frame: 19, after: 'wait' },

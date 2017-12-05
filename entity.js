@@ -87,17 +87,18 @@ function Entity(file, width, height) {
     }
 }
 
-Entity.prototype.createHP = function(cop) {
+Entity.prototype.createHP = function(copHp) {
     this.border_sprite = new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(64, 0, 32, 32)));
     this.hp_sprite = new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(96, 0, 32, 32)));
-    if (cop) {
+    if (copHp) {
         this.cop_hp = new PIXI.Sprite(new PIXI.Texture(resources['stars'].texture, new PIXI.Rectangle(128, 0, 32, 32)));
     }
+    this.copHp = copHp;
     this.hp = 100;
     this.lastDisplayedHp = 100;
     currentContainer.addChild(this.border_sprite);
     currentContainer.addChild(this.hp_sprite);
-    if (cop) {
+    if (copHp) {
         currentContainer.addChild(this.cop_hp);
     }
 
@@ -273,7 +274,7 @@ Entity.prototype.updateGraphics = function() {
         if (this.cop_hp) {
             this.cop_hp.position.x = this.hp_sprite.position.x;
             this.cop_hp.position.y = this.hp_sprite.position.y;
-            this.cop_hp.texture.frame = new PIXI.Rectangle(130, 0, Math.min(Math.ceil(this.lastDisplayedHp * 28/100), 6), 19, 32);
+            this.cop_hp.texture.frame = new PIXI.Rectangle(130, 0, Math.min(Math.ceil(this.lastDisplayedHp * 28/100), Math.ceil(this.copHp * 28/100)), 19, 32);
         }
 
         this.icon_sprite.position.x = this.sprite.position.x - 16;

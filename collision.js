@@ -59,6 +59,19 @@ CollisionHandler.addCollision([true, PLAYER, BOX, function(player, crate, boxes)
     player.knockBack(crate);
 }]);
 
+CollisionHandler.addCollision([true, PLAYER, BOMB, function(player, crate, boxes) {
+    player.knockBack(crate);
+}]);
+
+CollisionHandler.addCollision([true, PLAYER, EXP, function(player, crate, boxes) {
+    crate.knockBack(player);
+}]);
+
+CollisionHandler.addCollision([true, PUNCHER, EXP, function(puncher, crate, boxes) {
+    crate.knockBack(puncher);
+}]);
+
+
 CollisionHandler.addCollision([true, PLAYER, PUNCHER, function(player, puncher, boxes) {
     if (boxes[2]) {
         player.knockBack(puncher);

@@ -57,7 +57,7 @@ function updateFocus() {
 
 function Puncher() {
     Entity.call(this, 'dragon', 64, 48);
-    this.createHP(true);
+    this.createHP(18.75);
 
     this.load_hitboxes('dragon_boxes');
     this.halfWidth = 16;
@@ -362,7 +362,7 @@ Puncher.prototype.damage = function(amount) {
         this.destroy_timer = 30;
         this.icon_sprite.position.y = this.sprite.position.y;
         this.icon_sprite.texture.frame = new PIXI.Rectangle(64, 0, 32, 32);
-    } else if (this.hp <= 300/16) {
+    } else if (this.hp <= this.copHp) {
         this.arresting = true;
     } else {
         wantFocus(null, this);
